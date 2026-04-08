@@ -8,6 +8,7 @@
 <meta property="og:title" content="Naman Behl — Data Science & Analytics" />
 <meta property="og:description" content="Data Science & Analytics student at UIUC. NLP intern at Kinesso, founder of Let Data Speak." />
 <meta property="og:type" content="website" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%237c3aed'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='%23080c14'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='26' fill='url(%23g)'>NB</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -112,8 +113,8 @@ section{position:relative;z-index:1;padding:120px 40px}
 .exp-company{font-family:'Syne',sans-serif;font-size:13px;font-weight:500}
 .exp-toggle{font-size:22px;font-weight:300;color:var(--muted);flex-shrink:0}
 .exp-tags{padding:14px 28px;display:flex;flex-wrap:wrap;gap:8px}
-.exp-body{padding:16px 28px 24px;border-top:1px solid rgba(26,40,64,.6);display:none}
-.exp-body.open{display:block}
+.exp-body{padding:16px 28px 24px;border-top:1px solid rgba(26,40,64,.6);display:block}
+.exp-body.closed{display:none}
 .exp-bullet{display:flex;gap:14px;margin-bottom:14px}
 .exp-bullet-dot{width:4px;height:4px;border-radius:50%;margin-top:9px;flex-shrink:0}
 .exp-bullet p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.9;color:var(--dim)}
@@ -154,6 +155,29 @@ section{position:relative;z-index:1;padding:120px 40px}
 .contact-card-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);text-decoration:none;transition:opacity .2s}
 .contact-card-val:hover{opacity:.7}
 .footer{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px}
+
+/* AVATAR */
+.avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(124,58,237,.15));border:2px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;box-shadow:0 0 40px rgba(0,212,255,.12)}
+.avatar::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(0,212,255,.1)}
+.avatar-inner{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#0c1a2e,#111827);display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+/* ACTIVE NAV */
+.nav-links a.active{color:var(--text)}
+.nav-links a.active::after{width:100%}
+
+/* TOOLTIP */
+.stat-card{position:relative}
+.stat-card .tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(13,21,36,.95);border:1px solid rgba(0,212,255,.2);border-radius:8px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.stat-card:hover .tooltip{opacity:1}
+
+/* CERT CARD */
+.cert-card{display:flex;align-items:center;gap:16px;padding:18px 22px}
+.cert-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.cert-name{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;color:var(--text);margin-bottom:2px}
+.cert-issuer{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+
+/* CURRENTLY BUILDING */
+.building-card{padding:28px 32px;background:rgba(0,212,255,.04);border-color:rgba(0,212,255,.2)}
 
 /* ANIMATIONS */
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
@@ -200,8 +224,35 @@ section{position:relative;z-index:1;padding:120px 40px}
 <!-- HERO -->
 <section id="hero">
   <div class="hero-inner">
-    <div class="monogram">
-      <span class="grad" style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px">NB</span>
+    <div style="display:flex;justify-content:center;margin-bottom:40px">
+      <div class="avatar">
+        <div class="avatar-inner">
+          <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Body -->
+            <circle cx="48" cy="96" r="32" fill="url(#bodyGrad)"/>
+            <!-- Head -->
+            <circle cx="48" cy="36" r="20" fill="url(#skinGrad)"/>
+            <!-- Hair -->
+            <ellipse cx="48" cy="20" rx="20" ry="10" fill="#1a0a2e"/>
+            <rect x="28" y="18" width="40" height="8" rx="4" fill="#1a0a2e"/>
+            <!-- Shirt collar detail -->
+            <path d="M36 68 L48 60 L60 68" stroke="rgba(0,212,255,0.6)" stroke-width="1.5" fill="none"/>
+            <defs>
+              <linearGradient id="bodyGrad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#0c1a2e"/>
+                <stop offset="100%" stop-color="#111827"/>
+              </linearGradient>
+              <linearGradient id="skinGrad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c4865a"/>
+                <stop offset="100%" stop-color="#a06840"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div style="position:absolute;bottom:4px;right:4px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7c3aed);display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)">
+          <span style="font-size:9px;font-weight:800;color:#fff;font-family:'Syne',sans-serif">NB</span>
+        </div>
+      </div>
     </div>
 
     <h1 class="hero-name">Naman Behl</h1>
@@ -222,16 +273,16 @@ section{position:relative;z-index:1;padding:120px 40px}
     </div>
 
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num grad">3</div><div class="stat-label">Countries Lived In</div></div>
-      <div class="stat-card"><div class="stat-num grad">84</div><div class="stat-label">Teams Scheduled</div></div>
-      <div class="stat-card"><div class="stat-num grad">9</div><div class="stat-label">Issues Published</div></div>
-      <div class="stat-card"><div class="stat-num grad">UAE</div><div class="stat-label">Tennis Rep</div></div>
+      <div class="stat-card"><div class="stat-num grad">3</div><div class="stat-label">Countries Lived In</div><div class="tooltip">India · UAE · USA</div></div>
+      <div class="stat-card"><div class="stat-num grad">84</div><div class="stat-label">Teams Scheduled</div><div class="tooltip">Across 5 tournaments, 384 fixtures</div></div>
+      <div class="stat-card"><div class="stat-num grad">9</div><div class="stat-label">Issues Published</div><div class="tooltip">Let Data Speak — every week since Feb 2026</div></div>
+      <div class="stat-card"><div class="stat-num grad">UAE</div><div class="stat-label">Tennis Rep</div><div class="tooltip">Represented UAE nationally in tennis</div></div>
     </div>
 
-    <div class="scroll-hint">
+    <a href="#about" class="scroll-hint" style="text-decoration:none;cursor:pointer">
       <span>Scroll</span>
       <div class="scroll-line"></div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -248,9 +299,9 @@ section{position:relative;z-index:1;padding:120px 40px}
         <p>I also represented the UAE nationally in tennis, captained a cricket team, and published a poetry collection at seventeen. The through-line: I like understanding how things work and finding the pattern underneath.</p>
         <div class="about-tags">
           <span class="tag-gray">UIUC '27</span>
-          <span class="tag-gray">GPA 3.55</span>
           <span class="tag-gray">CS Minor</span>
           <span class="tag-gray">Econ Minor</span>
+          <span class="tag-gray">India · UAE · USA</span>
         </div>
       </div>
 
@@ -484,6 +535,83 @@ section{position:relative;z-index:1;padding:120px 40px}
 
 <div class="divider"></div>
 
+<!-- CURRENTLY BUILDING -->
+<section id="building" style="padding:120px 40px">
+  <div class="container">
+    <span class="label reveal">Currently Building</span>
+    <h2 class="section-title reveal">Work in progress.</h2>
+    <div class="card building-card reveal">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:10px;height:10px;border-radius:50%;background:#00d4ff;animation:pulse2 2s ease-in-out infinite"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:.1em">ACTIVE PROJECT</span>
+      </div>
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--text);margin-bottom:6px">Restaurant Location Intelligence Tool</h3>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple);margin-bottom:20px">Data Dive Illinois — Illinois Data Science Club</p>
+      <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);line-height:1.9;margin-bottom:24px">A full-stack data pipeline and location intelligence tool that helps entrepreneurs identify the optimal neighborhood to open a restaurant. Given a cuisine type and budget, the system ranks neighborhoods by restaurant success likelihood using four decision dimensions: competition density, neighborhood demographics, foot traffic potential, and budget fit.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px">
+        <div style="padding:14px 18px;border-radius:12px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.12)">
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.1em">Data Sources</p>
+          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim)">Yelp (150K+ listings), Census ACS, Foursquare POI, OpenStreetMap, Commercial Real Estate</p>
+        </div>
+        <div style="padding:14px 18px;border-radius:12px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.12)">
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.1em">Output</p>
+          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim)">Neighborhood success rankings visualized as interactive Folium heatmaps across 3,200+ Illinois census tracts</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Folium</span><span class="tag">Census API</span><span class="tag">Yelp API</span><span class="tag">Foursquare API</span><span class="tag">Feature Engineering</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" style="padding:120px 40px">
+  <div class="container">
+    <span class="label reveal">Certifications</span>
+    <h2 class="section-title reveal">Credentials.</h2>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px" class="reveal">
+
+      <div class="card cert-card">
+        <div class="cert-icon" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18)">🤖</div>
+        <div>
+          <div class="cert-name">Google AI Essentials</div>
+          <div class="cert-issuer">Google</div>
+        </div>
+      </div>
+
+      <div class="card cert-card">
+        <div class="cert-icon" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)">📊</div>
+        <div>
+          <div class="cert-name">IBM Data Science Professional</div>
+          <div class="cert-issuer">IBM</div>
+        </div>
+      </div>
+
+      <div class="card cert-card">
+        <div class="cert-icon" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18)">🎓</div>
+        <div>
+          <div class="cert-name">Game Theory</div>
+          <div class="cert-issuer">Harvard University</div>
+        </div>
+      </div>
+
+      <div class="card cert-card">
+        <div class="cert-icon" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)">🏆</div>
+        <div>
+          <div class="cert-name">Communication Skills — All 8 Levels, Distinction</div>
+          <div class="cert-issuer">Trinity College London</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- LEADERSHIP -->
 <section id="leadership" style="padding:120px 40px">
   <div class="container">
@@ -634,9 +762,14 @@ section{position:relative;z-index:1;padding:120px 40px}
   window.addEventListener('resize', ()=>{ resize(); initParticles(); });
 })();
 
-// Navbar scroll
+// Navbar scroll + active nav spy
+const navSections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 window.addEventListener('scroll', ()=>{
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  let current = '';
+  navSections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+current); });
 });
 
 // Scroll reveal
@@ -649,17 +782,14 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 function toggleExp(header){
   const body = header.closest('.card').querySelector('.exp-body');
   const toggle = header.querySelector('.exp-toggle');
-  const isOpen = body.classList.contains('open');
-  // close all
-  document.querySelectorAll('.exp-body').forEach(b=>b.classList.remove('open'));
-  document.querySelectorAll('.exp-toggle').forEach(t=>t.textContent='+');
-  if(!isOpen){ body.classList.add('open'); toggle.textContent='−'; }
+  const isClosed = body.classList.contains('closed');
+  body.classList.toggle('closed', !isClosed);
+  toggle.textContent = isClosed ? '−' : '+';
 }
 
-// Open first exp by default
 document.addEventListener('DOMContentLoaded', ()=>{
-  const first = document.querySelector('.exp-header');
-  if(first) toggleExp(first);
+  // Set all toggles to − since all are open by default
+  document.querySelectorAll('.exp-toggle').forEach(t=>t.textContent='−');
 });
 </script>
 </body>
