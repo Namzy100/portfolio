@@ -137,7 +137,7 @@ section{position:relative;z-index:1;padding:120px 40px}
 .writing-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:24px}
 .writing-head h2{margin-bottom:12px}
 .writing-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);max-width:440px;line-height:1.8}
-.issues-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.issues-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .issue-card{padding:24px;display:flex;gap:20px;text-decoration:none;cursor:pointer}
 .issue-num-box{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center}
 .issue-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
@@ -176,6 +176,7 @@ section{position:relative;z-index:1;padding:120px 40px}
   .timeline-line{left:15px}
   .exp-item{padding-left:44px}
   .exp-dot{left:7px}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important}
 }
 </style>
 </head>
@@ -222,9 +223,9 @@ section{position:relative;z-index:1;padding:120px 40px}
     </div>
 
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num grad">3.55</div><div class="stat-label">GPA at UIUC</div></div>
+      <div class="stat-card"><div class="stat-num grad">3</div><div class="stat-label">Countries Lived In</div></div>
       <div class="stat-card"><div class="stat-num grad">84</div><div class="stat-label">Teams Scheduled</div></div>
-      <div class="stat-card"><div class="stat-num grad">6+</div><div class="stat-label">Issues Published</div></div>
+      <div class="stat-card"><div class="stat-num grad">9</div><div class="stat-label">Issues Published</div></div>
       <div class="stat-card"><div class="stat-num grad">UAE</div><div class="stat-label">Tennis Rep</div></div>
     </div>
 
@@ -436,7 +437,7 @@ section{position:relative;z-index:1;padding:120px 40px}
       <div>
         <span class="label">Writing</span>
         <h2 class="section-title" style="margin-bottom:12px">Let Data Speak.</h2>
-        <p class="writing-desc">A weekly publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. 9 issues and counting.</p>
+        <p class="writing-desc">A weekly publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. 9 issues published, every single week since February 2026.</p>
       </div>
       <a href="https://letdataspeak.substack.com" target="_blank" class="btn btn-outline">Read on Substack ↗</a>
     </div>
@@ -444,19 +445,39 @@ section{position:relative;z-index:1;padding:120px 40px}
     <div class="issues-grid reveal">
       <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
         <div class="issue-num-box"><span class="issue-num grad">#09</span></div>
-        <div><div class="issue-topic">Obesity Epidemic</div><div class="issue-teaser">What the data actually says about America's weight crisis — and why the narrative gets it wrong.</div></div>
+        <div><div class="issue-topic">Engineered to Eat</div><div class="issue-teaser">How the obesity epidemic was built — and why the data points at systems, not willpower.</div></div>
       </a>
       <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
         <div class="issue-num-box"><span class="issue-num grad">#08</span></div>
-        <div><div class="issue-topic">Retirement Savings Behavior</div><div class="issue-teaser">Why people save less than they should — and when they finally start.</div></div>
+        <div><div class="issue-topic">Why Most People Retire Broke</div><div class="issue-teaser">Despite earning well. The numbers on retirement savings behavior and when people finally start.</div></div>
       </a>
       <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
         <div class="issue-num-box"><span class="issue-num grad">#07</span></div>
-        <div><div class="issue-topic">City Salary vs Cost of Living</div><div class="issue-teaser">Does earning more in a big city actually mean living better? The numbers have an opinion.</div></div>
+        <div><div class="issue-topic">The City That Pays More</div><div class="issue-teaser">Might be leaving you with less. City salary vs cost of living — the real numbers.</div></div>
       </a>
       <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
         <div class="issue-num-box"><span class="issue-num grad">#06</span></div>
-        <div><div class="issue-topic">Rent vs. Buy</div><div class="issue-teaser">Running the actual numbers on the most debated personal finance question.</div></div>
+        <div><div class="issue-topic">Owning Beats Renting</div><div class="issue-teaser">Until you run the numbers. The rent vs buy debate, actually quantified.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#05</span></div>
+        <div><div class="issue-topic">Diversification & Hidden Exposure</div><div class="issue-teaser">The problem with thinking you're diversified when you're really not.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#04</span></div>
+        <div><div class="issue-topic">The Cost of Cutting Slack</div><div class="issue-teaser">What the data says about what companies actually lose when they cut headcount.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#03</span></div>
+        <div><div class="issue-topic">The Average Player Does Not Exist</div><div class="issue-teaser">Why averages in sports analytics lie — and what you should be looking at instead.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#02</span></div>
+        <div><div class="issue-topic">The Attribution Illusion</div><div class="issue-teaser">How marketing metrics take credit for things they didn't cause.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#01</span></div>
+        <div><div class="issue-topic">Why Free Trials Fail</div><div class="issue-teaser">More often than teams admit. The data on trial-to-paid conversion and what drives it.</div></div>
       </a>
     </div>
   </div>
@@ -469,7 +490,20 @@ section{position:relative;z-index:1;padding:120px 40px}
   <div class="container">
     <span class="label reveal">Beyond the Data</span>
     <h2 class="section-title reveal">The full picture.</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="reveal">
+
+    <!-- Published Author Banner -->
+    <div class="card reveal" style="padding:32px 36px;margin-bottom:20px;display:flex;align-items:center;gap:32px;background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.25)">
+      <div style="flex-shrink:0;width:64px;height:64px;border-radius:16px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);display:flex;align-items:center;justify-content:center;font-size:28px">📚</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--text)">Self-Published Author</h3>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;border-radius:100px;background:rgba(124,58,237,.12);color:rgba(124,58,237,.9);border:1px solid rgba(124,58,237,.25)">Age 17</span>
+        </div>
+        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);line-height:1.8">Published <em style="color:var(--text)">Me/Who? An Odyssey of Conflicts</em> — a poetry collection exploring teenage identity, emotional conflict, and self-reflection. Writing about data and writing about the human experience turn out to use the same skill: finding the honest thing buried underneath.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px" class="reveal">
 
       <div class="card" style="padding:28px">
         <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
@@ -477,14 +511,6 @@ section{position:relative;z-index:1;padding:120px 40px}
         </div>
         <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Professional Athlete</h3>
         <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Represented the UAE nationally in tennis. Also captained my college cricket team — two completely different sports, same instinct: read the pattern, make the decision fast.</p>
-      </div>
-
-      <div class="card" style="padding:28px">
-        <div style="width:44px;height:44px;border-radius:12px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-          <span style="font-size:20px">📖</span>
-        </div>
-        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Self-Published Author</h3>
-        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Published <em>Me/Who? An Odyssey of Conflicts</em> at seventeen — a poetry collection on teenage identity and emotional conflict. Turns out writing about data and writing about feelings use the same muscle: finding the honest thing to say.</p>
       </div>
 
       <div class="card" style="padding:28px">
