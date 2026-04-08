@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Naman Behl — Data Science & Analytics</title>
+<meta name="description" content="Data Science & Analytics student at UIUC. Building AI-powered analytics tools, publishing Let Data Speak weekly." />
+<meta property="og:title" content="Naman Behl — Data Science & Analytics" />
+<meta property="og:description" content="Data Science & Analytics student at UIUC. NLP intern at Kinesso, founder of Let Data Speak." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07090f;
+  --surface:#0c1220;
+  --card:#111827;
+  --border:#1a2840;
+  --cyan:#00d4ff;
+  --purple:#7c3aed;
+  --text:#dce8f5;
+  --muted:#4a6080;
+  --dim:#7a93b0;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(0,212,255,.2);color:var(--text)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#1a2840;border-radius:2px}
+
+/* CANVAS */
+#bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;transition:all .4s ease}
+nav.scrolled{background:rgba(7,9,15,.92);backdrop-filter:blur(24px);border-bottom:1px solid rgba(26,40,64,.7);padding:14px 40px}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-family:'Syne',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,212,255,.3);padding:8px 18px;border-radius:100px;text-decoration:none;transition:all .2s;background:rgba(0,212,255,.05)}
+.nav-cta:hover{background:rgba(0,212,255,.12);border-color:rgba(0,212,255,.6)}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:120px 40px}
+.container{max-width:1100px;margin:0 auto}
+.container-sm{max-width:820px;margin:0 auto}
+
+/* LABELS */
+.label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:14px}
+.section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.03em;line-height:1.05;color:var(--text);margin-bottom:52px}
+
+/* GRADIENT UTILS */
+.grad{background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-line{height:2px;background:linear-gradient(90deg,#00d4ff,#7c3aed);border-radius:2px}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(26,40,64,.8),transparent);margin:0}
+
+/* CARDS */
+.card{background:rgba(17,24,39,.75);border:1px solid rgba(26,40,64,.7);border-radius:20px;backdrop-filter:blur(12px);transition:border-color .3s,box-shadow .3s,transform .3s}
+.card:hover{border-color:rgba(0,212,255,.28);box-shadow:0 0 40px rgba(0,212,255,.06),0 20px 60px rgba(0,0,0,.3);transform:translateY(-3px)}
+
+/* TAGS */
+.tag{display:inline-flex;align-items:center;padding:4px 11px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;background:rgba(0,212,255,.08);color:rgba(0,212,255,.85);border:1px solid rgba(0,212,255,.18)}
+.tag-gray{display:inline-flex;align-items:center;padding:4px 11px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;background:rgba(26,40,64,.5);color:var(--dim);border:1px solid rgba(26,40,64,.9)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 36px;border-radius:100px;font-family:'Syne',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .25s;cursor:pointer;border:none}
+.btn-grad{background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;box-shadow:0 0 30px rgba(0,212,255,.25)}
+.btn-grad:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 0 50px rgba(0,212,255,.4)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(26,40,64,.9)}
+.btn-outline:hover{border-color:rgba(0,212,255,.45);background:rgba(0,212,255,.06);transform:translateY(-2px)}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 40px 80px;text-align:center}
+.hero-inner{max-width:860px;margin:0 auto;opacity:0;transform:translateY(28px);animation:fadeUp 1s .15s ease forwards}
+.monogram{width:80px;height:80px;border-radius:50%;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.22);display:flex;align-items:center;justify-content:center;margin:0 auto 48px;box-shadow:0 0 40px rgba(0,212,255,.1);position:relative}
+.monogram::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(0,212,255,.08);animation:pulse-ring 3s ease-in-out infinite}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.8rem,12vw,8.5rem);letter-spacing:-.04em;line-height:.92;color:var(--text);text-shadow:0 0 80px rgba(0,212,255,.2);margin-bottom:32px}
+.hero-title-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:32px}
+.hero-title-row .line{height:1px;width:48px;background:linear-gradient(90deg,transparent,#00d4ff)}
+.hero-title-row .line-r{background:linear-gradient(90deg,#7c3aed,transparent)}
+.hero-title{font-family:'Syne',sans-serif;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.hero-bio{font-family:'DM Sans',sans-serif;font-weight:300;font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.85;color:var(--dim);max-width:560px;margin:0 auto 52px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:72px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:600px;margin:0 auto}
+.stat-card{background:rgba(17,24,39,.8);border:1px solid rgba(26,40,64,.7);border-radius:16px;padding:20px 12px;text-align:center;transition:border-color .3s,box-shadow .3s}
+.stat-card:hover{border-color:rgba(0,212,255,.25);box-shadow:0 0 24px rgba(0,212,255,.06)}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;margin-bottom:4px}
+.stat-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);line-height:1.3}
+.scroll-hint{margin-top:64px;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2.5s ease-in-out infinite}
+.scroll-hint span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#1e3050}
+.scroll-hint .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(0,212,255,.45),transparent)}
+
+/* ── ABOUT ── */
+#about .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-text p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.95;color:var(--dim);margin-bottom:18px}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+
+/* ── EXPERIENCE ── */
+.timeline{position:relative}
+.timeline-line{position:absolute;left:19px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(0,212,255,.35),rgba(124,58,237,.2),transparent)}
+.exp-item{padding-left:56px;position:relative;margin-bottom:20px}
+.exp-dot{position:absolute;left:11px;top:24px;width:16px;height:16px;border-radius:50%;border:2px solid;background:var(--bg)}
+.exp-header{padding:24px 28px 0;cursor:pointer;user-select:none}
+.exp-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.exp-role{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;color:var(--text);margin-bottom:4px}
+.exp-company{font-family:'Syne',sans-serif;font-size:13px;font-weight:500}
+.exp-toggle{font-size:22px;font-weight:300;color:var(--muted);flex-shrink:0}
+.exp-tags{padding:14px 28px;display:flex;flex-wrap:wrap;gap:8px}
+.exp-body{padding:16px 28px 24px;border-top:1px solid rgba(26,40,64,.6);display:none}
+.exp-body.open{display:block}
+.exp-bullet{display:flex;gap:14px;margin-bottom:14px}
+.exp-bullet-dot{width:4px;height:4px;border-radius:50%;margin-top:9px;flex-shrink:0}
+.exp-bullet p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.9;color:var(--dim)}
+
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.proj-card{padding:28px;display:flex;flex-direction:column;gap:18px}
+.proj-head{display:flex;justify-content:space-between;align-items:flex-start}
+.proj-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--text);margin-bottom:4px}
+.proj-sub{font-family:'JetBrains Mono',monospace;font-size:11px}
+.proj-link{font-size:20px;color:var(--muted);text-decoration:none;transition:color .2s;flex-shrink:0;margin-left:16px}
+.proj-link:hover{color:var(--cyan)}
+.proj-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.9;color:var(--dim)}
+.proj-stats{display:grid;gap:10px}
+.proj-stat{text-align:center;padding:14px 8px;border-radius:12px}
+.proj-stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:2px}
+.proj-stat-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)}
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+
+/* ── WRITING ── */
+.writing-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:24px}
+.writing-head h2{margin-bottom:12px}
+.writing-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);max-width:440px;line-height:1.8}
+.issues-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.issue-card{padding:24px;display:flex;gap:20px;text-decoration:none;cursor:pointer}
+.issue-num-box{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center}
+.issue-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
+.issue-topic{font-family:'Syne',sans-serif;font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px}
+.issue-teaser{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;color:var(--dim)}
+
+/* ── CONTACT ── */
+#contact{text-align:center}
+#contact .section-title{margin-bottom:12px}
+.contact-sub{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);max-width:440px;margin:0 auto 56px;line-height:1.8}
+.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:700px;margin:0 auto 56px}
+.contact-card{padding:20px 16px;text-align:center;border-radius:18px}
+.contact-card-label{font-family:'Syne',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.contact-card-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);text-decoration:none;transition:opacity .2s}
+.contact-card-val:hover{opacity:.7}
+.footer{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pulse-ring{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.6;transform:scale(1.08)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  nav.scrolled{padding:12px 20px}
+  .nav-links a:not(.nav-cta){display:none}
+  section{padding:80px 20px}
+  #about .grid-2{grid-template-columns:1fr;gap:48px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .proj-grid{grid-template-columns:1fr}
+  .issues-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:repeat(2,1fr)}
+  .timeline-line{left:15px}
+  .exp-item{padding-left:44px}
+  .exp-dot{left:7px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">NB</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#writing">Writing</a>
+    <a href="#contact">Contact</a>
+    <a href="https://letdataspeak.substack.com" target="_blank" class="nav-cta">Let Data Speak ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="monogram">
+      <span class="grad" style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px">NB</span>
+    </div>
+
+    <h1 class="hero-name">Naman Behl</h1>
+
+    <div class="hero-title-row">
+      <div class="line"></div>
+      <span class="hero-title grad">Data Science & Analytics</span>
+      <div class="line line-r"></div>
+    </div>
+
+    <p class="hero-bio">
+      I find patterns in data, build things that make sense of them, and let the numbers tell the story.
+      Not just what's on the surface — I want to know what's actually driving it, optimize around it, and turn it into something that gets used.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#experience" class="btn btn-grad">View Experience</a>
+      <a href="#projects" class="btn btn-outline">See Projects</a>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-num grad">3.55</div><div class="stat-label">GPA at UIUC</div></div>
+      <div class="stat-card"><div class="stat-num grad">84</div><div class="stat-label">Teams Scheduled</div></div>
+      <div class="stat-card"><div class="stat-num grad">6+</div><div class="stat-label">Issues Published</div></div>
+      <div class="stat-card"><div class="stat-num grad">UAE</div><div class="stat-label">Tennis Rep</div></div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="grid-2 reveal">
+      <div class="about-text">
+        <span class="label">About</span>
+        <h2 class="section-title">Built different.<br>Thinks in data.</h2>
+        <div class="grad-line" style="width:48px;margin-bottom:36px"></div>
+        <p>Born in Chandigarh. Grew up in Dubai. Now at the University of Illinois studying Information Sciences and Data Science, with minors in Computer Science and Economics.</p>
+        <p>Last summer I built an NLP-powered analytics agent at Kinesso that marketing teams used daily to query large datasets in plain English and get real-time strategy insights. Before that I was inside a Security Operations Center in Dubai watching enterprise systems operate under real pressure.</p>
+        <p>I also represented the UAE nationally in tennis, captained a cricket team, and published a poetry collection at seventeen. The through-line: I like understanding how things work and finding the pattern underneath.</p>
+        <div class="about-tags">
+          <span class="tag-gray">UIUC '27</span>
+          <span class="tag-gray">GPA 3.55</span>
+          <span class="tag-gray">CS Minor</span>
+          <span class="tag-gray">Econ Minor</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="label">Stack</span>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card" style="padding:20px 24px">
+            <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Languages</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">R</span><span class="tag">Java</span><span class="tag">C++</span>
+            </div>
+          </div>
+          <div class="card" style="padding:20px 24px">
+            <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">ML & Analytics</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">NLP</span><span class="tag">Statistical Modeling</span>
+            </div>
+          </div>
+          <div class="card" style="padding:20px 24px">
+            <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Visualization & Web</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span class="tag">Matplotlib</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">React</span><span class="tag">Firebase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container-sm">
+    <span class="label reveal">Experience</span>
+    <h2 class="section-title reveal">Where I've worked.</h2>
+
+    <div class="timeline reveal">
+      <div class="timeline-line"></div>
+
+      <!-- Kinesso -->
+      <div class="exp-item">
+        <div class="exp-dot" style="border-color:#00d4ff"></div>
+        <div class="card">
+          <div class="exp-header" onclick="toggleExp(this)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div class="exp-meta">
+                  <div style="width:6px;height:6px;border-radius:50%;background:#00d4ff;flex-shrink:0"></div>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">May 2025 – Aug 2025 · Dubai, UAE</span>
+                </div>
+                <div class="exp-role">Data Science Intern</div>
+                <div class="exp-company" style="color:#00d4ff">Kinesso — MENA</div>
+              </div>
+              <span class="exp-toggle">+</span>
+            </div>
+          </div>
+          <div class="exp-tags">
+            <span class="tag">NLP</span><span class="tag">Python</span><span class="tag">AI Agent</span><span class="tag">Data Pipelines</span><span class="tag">Mar-tech</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#00d4ff"></div><p>Engineered and deployed an NLP-powered analytics agent adopted by the marketing analytics and in-house tech teams, enabling any business user to query large-scale datasets and receive real-time answers in plain English without writing SQL.</p></div>
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#00d4ff"></div><p>Built the agent to surface top-performing brand insights and auto-generate data-driven strategy recommendations, replacing hours of manual reporting with on-demand analysis.</p></div>
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#00d4ff"></div><p>Developed scalable data pipelines and optimized analytics workflows, integrating the AI agent directly into the mar-tech stack to accelerate decision-making across business units.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paramount -->
+      <div class="exp-item">
+        <div class="exp-dot" style="border-color:#7c3aed"></div>
+        <div class="card">
+          <div class="exp-header" onclick="toggleExp(this)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div class="exp-meta">
+                  <div style="width:6px;height:6px;border-radius:50%;background:#7c3aed;flex-shrink:0"></div>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">Jul 2022 – Aug 2022 · Dubai, UAE</span>
+                </div>
+                <div class="exp-role">Pre-Sales Intern</div>
+                <div class="exp-company" style="color:#7c3aed">Paramount Computer Systems</div>
+              </div>
+              <span class="exp-toggle">+</span>
+            </div>
+          </div>
+          <div class="exp-tags">
+            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">Cybersecurity</span>
+            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">SOC</span>
+            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">Compliance</span>
+            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">Enterprise</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Rotated across Security Operations Center (SOC) teams observing real-time threat monitoring, incident response workflows, and enterprise cybersecurity operations across a range of client environments.</p></div>
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Assisted in compliance audits and security assessments to evaluate system vulnerabilities and documentation processes, working directly with senior security engineers.</p></div>
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Contributed to cross-functional discussions on improving mitigation strategy communication and infrastructure resilience, helping translate technical findings for non-technical stakeholders.</p></div>
+            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Gained firsthand exposure to how enterprise security decisions intersect with business operations — an early lesson in how trust and reliability are products of rigorous process, not just technology.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <span class="label reveal">Projects</span>
+    <h2 class="section-title reveal">Things I've built.</h2>
+
+    <div class="proj-grid reveal">
+      <!-- Scheduling AI -->
+      <div class="card proj-card">
+        <div class="proj-head">
+          <div>
+            <div class="proj-title">Scheduling AI</div>
+            <div class="proj-sub" style="color:#00d4ff">Constraint-Based Tournament Engine</div>
+          </div>
+          <a href="https://github.com/naman-behl/scheduling-ai" target="_blank" class="proj-link">↗</a>
+        </div>
+        <p class="proj-desc">Built a scheduling engine that generated a complete, conflict-free fixture calendar across 5 tournaments, 84 teams, and 384 league games — resolving 80+ overlapping constraints automatically with zero errors.</p>
+        <div class="proj-stats" style="grid-template-columns:repeat(4,1fr)">
+          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">84</div><div class="proj-stat-label">Teams</div></div>
+          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">384</div><div class="proj-stat-label">Fixtures</div></div>
+          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">80+</div><div class="proj-stat-label">Constraints</div></div>
+          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">5</div><div class="proj-stat-label">Tournaments</div></div>
+        </div>
+        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">Constraint Satisfaction</span><span class="tag-gray">Optimization</span></div>
+      </div>
+
+      <!-- Let Data Speak -->
+      <div class="card proj-card">
+        <div class="proj-head">
+          <div>
+            <div class="proj-title">Let Data Speak</div>
+            <div class="proj-sub" style="color:#7c3aed">Weekly Quantitative Publication</div>
+          </div>
+          <a href="https://letdataspeak.substack.com" target="_blank" class="proj-link">↗</a>
+        </div>
+        <p class="proj-desc">A weekly data publication where I pick an industry, challenge a commonly held assumption, and run the numbers to see if it holds. 6 issues published, one per week, each covering a different sector.</p>
+        <div class="proj-stats" style="grid-template-columns:repeat(2,1fr)">
+          <div class="proj-stat" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)"><div class="proj-stat-num" style="color:#7c3aed">6+</div><div class="proj-stat-label">Issues</div></div>
+          <div class="proj-stat" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)"><div class="proj-stat-num" style="color:#7c3aed">Weekly</div><div class="proj-stat-label">Cadence</div></div>
+        </div>
+        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">Pandas</span><span class="tag-gray">Matplotlib</span><span class="tag-gray">Analysis</span></div>
+      </div>
+
+      <!-- Statistics Datathon -->
+      <div class="card proj-card">
+        <div class="proj-head">
+          <div>
+            <div class="proj-title">Statistics Datathon</div>
+            <div class="proj-sub" style="color:#00d4ff">UIUC × Synchrony Financial</div>
+          </div>
+        </div>
+        <p class="proj-desc">Open university data competition hosted by UIUC in partnership with Synchrony Financial. Built end-to-end ML pipelines on an unfamiliar dataset under time pressure and presented findings to a panel of judges.</p>
+        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">scikit-learn</span><span class="tag-gray">ML Pipeline</span><span class="tag-gray">Presentation</span></div>
+      </div>
+
+      <!-- Data Dive -->
+      <div class="card proj-card">
+        <div class="proj-head">
+          <div>
+            <div class="proj-title">Data Dive Illinois</div>
+            <div class="proj-sub" style="color:#7c3aed">Illinois Data Science Club Competition</div>
+          </div>
+        </div>
+        <p class="proj-desc">Internal competition through the Illinois Data Science Club competition team. Rapid prototyping of analytical models under tight time constraints, with a focus on clear insight communication.</p>
+        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">EDA</span><span class="tag-gray">Team Competition</span><span class="tag-gray">DS Club</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WRITING -->
+<section id="writing">
+  <div class="container">
+    <div class="writing-head reveal">
+      <div>
+        <span class="label">Writing</span>
+        <h2 class="section-title" style="margin-bottom:12px">Let Data Speak.</h2>
+        <p class="writing-desc">A weekly publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. 9 issues and counting.</p>
+      </div>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="btn btn-outline">Read on Substack ↗</a>
+    </div>
+
+    <div class="issues-grid reveal">
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#09</span></div>
+        <div><div class="issue-topic">Obesity Epidemic</div><div class="issue-teaser">What the data actually says about America's weight crisis — and why the narrative gets it wrong.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#08</span></div>
+        <div><div class="issue-topic">Retirement Savings Behavior</div><div class="issue-teaser">Why people save less than they should — and when they finally start.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#07</span></div>
+        <div><div class="issue-topic">City Salary vs Cost of Living</div><div class="issue-teaser">Does earning more in a big city actually mean living better? The numbers have an opinion.</div></div>
+      </a>
+      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
+        <div class="issue-num-box"><span class="issue-num grad">#06</span></div>
+        <div><div class="issue-topic">Rent vs. Buy</div><div class="issue-teaser">Running the actual numbers on the most debated personal finance question.</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LEADERSHIP -->
+<section id="leadership" style="padding:120px 40px">
+  <div class="container">
+    <span class="label reveal">Beyond the Data</span>
+    <h2 class="section-title reveal">The full picture.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="reveal">
+
+      <div class="card" style="padding:28px">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <span style="font-size:20px">🎾</span>
+        </div>
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Professional Athlete</h3>
+        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Represented the UAE nationally in tennis. Also captained my college cricket team — two completely different sports, same instinct: read the pattern, make the decision fast.</p>
+      </div>
+
+      <div class="card" style="padding:28px">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <span style="font-size:20px">📖</span>
+        </div>
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Self-Published Author</h3>
+        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Published <em>Me/Who? An Odyssey of Conflicts</em> at seventeen — a poetry collection on teenage identity and emotional conflict. Turns out writing about data and writing about feelings use the same muscle: finding the honest thing to say.</p>
+      </div>
+
+      <div class="card" style="padding:28px">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <span style="font-size:20px">🏆</span>
+        </div>
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Trinity College London</h3>
+        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Completed all 8 levels of the Trinity College London Communication Skills certification with Distinction — which explains why I can talk about NLP pipelines to a room full of non-technical stakeholders without losing them.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <span class="label reveal">Contact</span>
+    <h2 class="section-title reveal">Let's talk.</h2>
+    <p class="contact-sub reveal">Looking for data science internships for Summer 2026. Open to roles at the intersection of analytics, AI, and business impact.</p>
+
+    <div class="contact-grid reveal">
+      <div class="card contact-card">
+        <div class="contact-card-label">Email</div>
+        <a href="mailto:nbehl2@illinois.edu" class="contact-card-val">nbehl2@illinois.edu</a>
+      </div>
+      <div class="card contact-card">
+        <div class="contact-card-label">LinkedIn</div>
+        <a href="https://www.linkedin.com/in/naman-behl-686928265/" target="_blank" class="contact-card-val">Naman Behl</a>
+      </div>
+      <div class="card contact-card">
+        <div class="contact-card-label">Substack</div>
+        <a href="https://letdataspeak.substack.com" target="_blank" class="contact-card-val">Let Data Speak</a>
+      </div>
+      <div class="card contact-card">
+        <div class="contact-card-label">GitHub</div>
+        <a href="https://github.com/naman-behl" target="_blank" class="contact-card-val">naman-behl</a>
+      </div>
+    </div>
+
+    <div class="divider" style="max-width:700px;margin:0 auto 24px"></div>
+    <p class="footer">Naman Behl · UIUC '27 · Built with HTML & ambition</p>
+  </div>
+</section>
+
+<script>
+// Canvas background
+(function(){
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], animId;
+  const isMobile = () => window.innerWidth < 768;
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initParticles(){
+    particles = [];
+    const count = isMobile() ? 45 : 100;
+    for(let i = 0; i < count; i++){
+      particles.push({
+        x: Math.random()*W, y: Math.random()*H,
+        vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25,
+        r: Math.random()*1.4+.4,
+        op: Math.random()*.45+.08,
+        cyan: Math.random() > .35
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // Soft glow blobs
+    const g1 = ctx.createRadialGradient(W*.28,H*.2,0,W*.28,H*.2,W*.55);
+    g1.addColorStop(0,'rgba(0,212,255,.035)');
+    g1.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
+
+    const g2 = ctx.createRadialGradient(W*.78,H*.72,0,W*.78,H*.72,W*.45);
+    g2.addColorStop(0,'rgba(124,58,237,.04)');
+    g2.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
+
+    // Move + draw particles
+    for(let p of particles){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0) p.x = W; if(p.x > W) p.x = 0;
+      if(p.y < 0) p.y = H; if(p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.cyan ? `rgba(0,212,255,${p.op})` : `rgba(124,58,237,${p.op*.7})`;
+      ctx.fill();
+    }
+
+    // Connecting lines
+    for(let i = 0; i < particles.length; i++){
+      for(let j = i+1; j < particles.length; j++){
+        const dx = particles[i].x-particles[j].x;
+        const dy = particles[i].y-particles[j].y;
+        const d = Math.sqrt(dx*dx+dy*dy);
+        if(d < 110){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle = `rgba(0,212,255,${.055*(1-d/110)})`;
+          ctx.lineWidth = .5;
+          ctx.stroke();
+        }
+      }
+    }
+    animId = requestAnimationFrame(draw);
+  }
+
+  const pref = window.matchMedia('(prefers-reduced-motion: reduce)');
+  resize(); initParticles();
+  if(!pref.matches) draw();
+  window.addEventListener('resize', ()=>{ resize(); initParticles(); });
+})();
+
+// Navbar scroll
+window.addEventListener('scroll', ()=>{
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Experience accordion
+function toggleExp(header){
+  const body = header.closest('.card').querySelector('.exp-body');
+  const toggle = header.querySelector('.exp-toggle');
+  const isOpen = body.classList.contains('open');
+  // close all
+  document.querySelectorAll('.exp-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.exp-toggle').forEach(t=>t.textContent='+');
+  if(!isOpen){ body.classList.add('open'); toggle.textContent='−'; }
+}
+
+// Open first exp by default
+document.addEventListener('DOMContentLoaded', ()=>{
+  const first = document.querySelector('.exp-header');
+  if(first) toggleExp(first);
+});
+</script>
+</body>
+</html>
