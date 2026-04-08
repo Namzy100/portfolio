@@ -157,9 +157,9 @@ section{position:relative;z-index:1;padding:120px 40px}
 .footer{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px}
 
 /* AVATAR */
-.avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(124,58,237,.15));border:2px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;box-shadow:0 0 40px rgba(0,212,255,.12)}
-.avatar::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(0,212,255,.1)}
-.avatar-inner{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#0c1a2e,#111827);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.avatar{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(124,58,237,.15));border:2px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;box-shadow:0 0 60px rgba(0,212,255,.15)}
+.avatar::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,212,255,.1)}
+.avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden}
 
 /* ACTIVE NAV */
 .nav-links a.active{color:var(--text)}
@@ -226,30 +226,10 @@ section{position:relative;z-index:1;padding:120px 40px}
   <div class="hero-inner">
     <div style="display:flex;justify-content:center;margin-bottom:40px">
       <div class="avatar">
-        <div class="avatar-inner">
-          <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Body -->
-            <circle cx="48" cy="96" r="32" fill="url(#bodyGrad)"/>
-            <!-- Head -->
-            <circle cx="48" cy="36" r="20" fill="url(#skinGrad)"/>
-            <!-- Hair -->
-            <ellipse cx="48" cy="20" rx="20" ry="10" fill="#1a0a2e"/>
-            <rect x="28" y="18" width="40" height="8" rx="4" fill="#1a0a2e"/>
-            <!-- Shirt collar detail -->
-            <path d="M36 68 L48 60 L60 68" stroke="rgba(0,212,255,0.6)" stroke-width="1.5" fill="none"/>
-            <defs>
-              <linearGradient id="bodyGrad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#0c1a2e"/>
-                <stop offset="100%" stop-color="#111827"/>
-              </linearGradient>
-              <linearGradient id="skinGrad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#c4865a"/>
-                <stop offset="100%" stop-color="#a06840"/>
-              </linearGradient>
-            </defs>
-          </svg>
+        <div class="avatar-inner" style="width:100%;height:100%;border-radius:50%;overflow:hidden">
+          <img src="avatar.jpg" alt="Naman Behl" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%"/>
         </div>
-        <div style="position:absolute;bottom:4px;right:4px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7c3aed);display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)">
+        <div style="position:absolute;bottom:6px;right:6px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7c3aed);display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)">
           <span style="font-size:9px;font-weight:800;color:#fff;font-family:'Syne',sans-serif">NB</span>
         </div>
       </div>
