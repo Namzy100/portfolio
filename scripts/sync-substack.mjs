@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
 export const PUBLICATION_URL = "https://letdataspeak.substack.com";
-export const ARCHIVE_URL = `${PUBLICATION_URL}/api/v1/archive?sort=new&search=&offset=0&limit=100`;
+export const ARCHIVE_URL = `${PUBLICATION_URL}/api/v1/archive?sort=new&search=&offset=0&limit=50`;
 export const FEED_URL = `${PUBLICATION_URL}/feed`;
 const START = "      // LET-DATA-SPEAK:START";
 const END = "      // LET-DATA-SPEAK:END";
