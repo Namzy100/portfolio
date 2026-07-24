@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - agent/royal-beige-green-redesign
     paths:
       - ".github/workflows/update-writing.yml"
