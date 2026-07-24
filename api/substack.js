@@ -42,7 +42,7 @@ function normalize(items) {
   );
 }
 
-export default async function handler(_request, response) {
+module.exports = async function handler(_request, response) {
   try {
     let issues = [];
     const archive = await fetch(ARCHIVE_URL, {
@@ -77,4 +77,4 @@ export default async function handler(_request, response) {
   } catch (error) {
     response.status(502).json({ error: "Unable to refresh Let Data Speak.", detail: error.message });
   }
-}
+};
