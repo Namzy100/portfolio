@@ -300,7 +300,7 @@ a:hover { color: #5C4A1E; }
       <div style="display: flex; flex-direction: column; gap: 18px; max-width: 620px;">
         <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">V · Writing</div>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #F3EDDC;">Let Data Speak.</h2>
-        <p style="font-size: 20px; line-height: 1.65; margin: 0; font-style: italic; color: #CFC6A9; text-wrap: pretty;">A publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. {{ issueCount }} issues and counting.</p>
+        <p style="font-size: 20px; line-height: 1.65; margin: 0; font-style: italic; color: #CFC6A9; text-wrap: pretty;">A publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. {{ issueCount }} issues and counting. The archive syncs directly from Substack.</p>
       </div>
       <a href="https://letdataspeak.substack.com" target="_blank" style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: #16281F; background: #C8A85E; padding: 15px 30px; white-space: nowrap;" style-hover="background: #D8BC74;">Read on Substack ↗</a>
     </div>
@@ -399,11 +399,11 @@ class Component extends DCLogic {
   renderVals() {
     return {
       showCurrentlyBuilding: this.props.showCurrentlyBuilding ?? true,
-      issueCount: 9,
+      issueCount: 12,
       stats: [
         { num: "3", label: "Countries Lived In", detail: "India · UAE · USA" },
         { num: "84", label: "Teams Scheduled", detail: "Across 5 tournaments, 384 fixtures" },
-        { num: "9", label: "Issues Published", detail: "Let Data Speak — weekly since Feb 2026" },
+        { num: "12", label: "Issues Published", detail: "Let Data Speak — synced from Substack" },
         { num: "UAE", label: "Tennis Rep", detail: "Represented UAE nationally in tennis" },
       ],
       badges: ["UIUC '28", "CS Minor", "Econ Minor", "India · UAE · USA"],
