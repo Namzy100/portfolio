@@ -15,6 +15,29 @@ html { scroll-behavior: smooth; }
 body { margin: 0; background: #F1EADA; }
 a { color: #8A6D2F; text-decoration: none; }
 a:hover { color: #5C4A1E; }
+.hero-portrait {
+  position: relative;
+  overflow: hidden;
+  background: #C8A85E;
+  box-shadow: 0 16px 44px rgba(7, 18, 12, 0.34);
+}
+.hero-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, rgba(200,168,94,0.20), rgba(22,40,31,0.44)),
+    radial-gradient(circle at 42% 28%, rgba(243,237,220,0.12), transparent 48%);
+  mix-blend-mode: color;
+}
+.hero-portrait img {
+  filter: grayscale(0.72) sepia(0.22) saturate(0.72) contrast(1.08) brightness(0.92);
+  transform: scale(1.025);
+}
+.capability-card { transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; }
+.capability-card:hover { transform: translateY(-3px); border-color: #8A6D2F !important; background: #223C2E !important; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @media (max-width: 860px) {
   nav { padding: 16px 20px !important; }
@@ -64,12 +87,12 @@ a:hover { color: #5C4A1E; }
 <!-- HERO -->
 <header id="hero" data-screen-label="Hero" style="background: #16281F; color: #EFE7D3; padding: 96px 24px 110px; text-align: center; position: relative;">
   <div style="max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px; animation: fadeUp 0.7s ease both;">
-    <div style="width: 148px; height: 148px; border-radius: 50%; padding: 5px; border: 1px solid #C8A85E; display: flex; align-items: center; justify-content: center;">
-      <img src="https://namanbehl.com/avatar.jpg" alt="Naman Behl" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;">
+    <div class="hero-portrait" style="width: 148px; height: 148px; border-radius: 50%; padding: 5px; border: 1px solid #C8A85E; display: flex; align-items: center; justify-content: center;">
+      <img src="https://namanbehl.com/avatar.jpg" alt="Portrait of Naman Behl" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;">
     </div>
     <div style="display: flex; align-items: center; gap: 18px;">
       <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
-      <div style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.34em; text-transform: uppercase; color: #C8A85E;">Data Science &amp; Analytics</div>
+      <div style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.34em; text-transform: uppercase; color: #C8A85E;">AI Engineering · Data Systems · ML Solutions</div>
       <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
     </div>
     <h1 style="font-family: 'Playfair Display', serif; font-weight: 500; font-size: 108px; line-height: 1.02; margin: 0; letter-spacing: 0.01em; color: #F3EDDC;">Naman Behl</h1>
@@ -130,6 +153,44 @@ a:hover { color: #5C4A1E; }
       <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">II · Experience</div>
       <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #F3EDDC;">Where I've worked.</h2>
     </div>
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+        <div>
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #C8A85E; margin-bottom: 10px;">Summer 2026 · Production Engineering</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 500; margin: 0; color: #F3EDDC;">What I can now build end to end.</h3>
+        </div>
+        <p style="max-width: 480px; margin: 0; font-size: 18px; line-height: 1.55; font-style: italic; color: #A9A98C;">Not a tool list—a set of production capabilities earned by shipping, debugging, and operating a real system.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">01 · AI / LLM Engineering</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">Reliable model-backed systems</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Built Claude classifiers with schema-constrained outputs, deterministic fallbacks, cost-aware model routing, and uniform validation that rejects malformed or fabricated data before persistence.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">Claude · JSON Schema · Agent Safety · Adversarial Testing</div>
+        </div>
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">02 · Data Engineering</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">Five sources, one trusted pipeline</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Integrated Adjust, Meta, YouTube, Apify, and Google Sheets into a scheduled pipeline; evolved a Supabase/Postgres schema through real migrations and verified integrity from ingestion to rendered output.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">APIs · Supabase · Postgres · Data Quality</div>
+        </div>
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">03 · Backend & Infrastructure</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">Systems that survive production</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Shipped a FastAPI service with OAuth2, session state, and REST chat; migrated scheduling from local cron to GitHub Actions; managed OAuth scopes, key rotation, and service-account credentials.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">FastAPI · OAuth2 · GitHub Actions · Service Accounts</div>
+        </div>
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">04 · Delivery & Product</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">From incident to interface</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Built five production dashboards and a real-time chat UI, root-caused a silent precedence bug, reconciled divergent Git histories, and documented the system differently for engineers and stakeholders.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">Dashboard UI · Debugging · Git · Documentation</div>
+        </div>
+      </div>
+      <div style="border-left: 2px solid #C8A85E; padding: 12px 0 12px 22px; color: #CFC6A9; font-size: 18px; line-height: 1.6;"><strong style="font-family: 'Marcellus', serif; color: #F3EDDC; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px;">Safety boundary:</strong> built a tool-free, read-only conversational agent whose access restrictions are enforced in code—not left to prompt compliance.</div>
+    </div>
+
+    <div style="height: 1px; background: #3D5646; margin: 4px 0 2px;"></div>
     <sc-for list="{{ jobs }}" as="job" hint-placeholder-count="2">
       <div style="border: 1px solid #3D5646; background: #1C3327; padding: 44px 48px; display: flex; flex-direction: column; gap: 18px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap;">
