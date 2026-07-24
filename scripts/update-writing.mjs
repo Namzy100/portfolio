@@ -53,11 +53,24 @@ export function parseArchive(payload) {
     .filter((post) => post.href);
 }
 
+function normalizeIssues(items) {
+  const unique = new Map();
+  for (const item of items) {
+    if (item?.href && item?.title) unique.set(item.href, item);
+  }
+  return [...unique.values()].sort((a, b) => {
+    const aTime = Date.parse(a.publishedAt || "") || 0;
+    const bTime = Date.parse(b.publishedAt || "") || 0;
+    return bTime - aTime;
+  });
+}
+
 function js(value) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
 
-export function replaceWriting(html, items) {
+export function replaceWriting(html, rawItems) {
+  const items = normalizeIssues(rawItems);
   const rows = items.map((item, index) => {
     const issueNumber = String(items.length - index).padStart(2, "0");
     return `        { no: "№ ${issueNumber}", title: ${js(item.title)}, sub: ${js(item.sub)}, href: ${js(item.href)} },`;
@@ -90,20 +103,20 @@ async function fetchAllIssues() {
     url.searchParams.set("limit", String(limit));
 
     const response = await fetch(url, {
-      headers: { "user-agent": "naman-portfolio-writing-sync/2.0" },
+      headers: { "user-agent": "naman-portfolio-writing-sync/3.0" },
     });
     if (!response.ok) break;
 
     const page = parseArchive(await response.json());
     posts.push(...page);
-    if (page.length < limit) return posts;
+    if (page.length < limit) return normalizeIssues(posts);
   }
 
   const response = await fetch(FEED_URL, {
-    headers: { "user-agent": "naman-portfolio-writing-sync/2.0" },
+    headers: { "user-agent": "naman-portfolio-writing-sync/3.0" },
   });
   if (!response.ok) throw new Error(`Substack request failed with ${response.status}.`);
-  return parseFeed(await response.text());
+  return normalizeIssues(parseFeed(await response.text()));
 }
 
 async function main() {
