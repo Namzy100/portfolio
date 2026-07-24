@@ -53,6 +53,7 @@ a:hover { color: #5C4A1E; }
   <div style="display: flex; align-items: center; gap: 34px;">
     <a href="#about" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">About</a>
     <a href="#experience" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Experience</a>
+    <a href="#research" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Research</a>
     <a href="#projects" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Projects</a>
     <a href="#writing" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Writing</a>
     <a href="#contact" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Contact</a>
@@ -157,11 +158,54 @@ a:hover { color: #5C4A1E; }
   </div>
 </section>
 
+<!-- RESEARCH -->
+<section id="research" data-screen-label="Research" style="background: #F1EADA; padding: 110px 56px; border-bottom: 1px solid #C9B88A;">
+  <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 52px;">
+    <div style="display: grid; grid-template-columns: 0.72fr 1.28fr; gap: 76px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">III · Research</div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; line-height: 1.08; color: #1C3327;">When AI judges <em style="font-weight: 400;">human conflict.</em></h2>
+        <div style="width: 72px; height: 1px; background: #8A6D2F;"></div>
+        <p style="font-family: 'Marcellus', serif; font-size: 13px; line-height: 1.7; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6A54; margin: 0;">Professor Meicen Sun · UIUC School of Information Sciences</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 22px;">
+        <p style="font-size: 22px; line-height: 1.65; margin: 0; color: #2F3D2D; text-wrap: pretty;">A broader study of how AI models interpret interpersonal conflict, using 120 real conversations from <em>r/AmIOverreacting</em>. GPT-4o judged whether Person B overreacted under control and modified-framing conditions, and predicted how conversations would continue from their first 60%.</p>
+        <p style="font-size: 20px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">My responsibility was the layer the model depended on: transcript quality. Because the model saw typed transcripts rather than the original screenshots, every missing emoji, altered word, or formatting inconsistency could change the emotional signal—and therefore the judgment.</p>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #A8956A; background: #F6F1E2; padding: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 42px;">
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: #8A6D2F;">The Pipeline</div>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 500; line-height: 1.2; margin: 0; color: #1C3327;">Screenshot-to-transcript quality evaluation</h3>
+        <p style="font-size: 19px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">Built an ML-assisted evaluation pipeline using GPT-4o vision to compare each conversation screenshot with its transcript across two dimensions:</p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 14px; align-items: baseline;"><span style="color: #8A6D2F;">✦</span><p style="font-size: 19px; line-height: 1.6; margin: 0; color: #3F4534;"><strong style="font-family: 'Marcellus', serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px;">Accuracy</strong> — words, punctuation, emojis, and message boundaries.</p></div>
+          <div style="display: flex; gap: 14px; align-items: baseline;"><span style="color: #8A6D2F;">✦</span><p style="font-size: 19px; line-height: 1.6; margin: 0; color: #3F4534;"><strong style="font-family: 'Marcellus', serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px;">Consistency</strong> — whether the same transcription schema was applied across all posts.</p></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 18px; border-left: 1px solid #D8CCAC; padding-left: 42px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: #8A6D2F;">What the audit revealed</div>
+        <p style="font-family: 'Playfair Display', serif; font-size: 29px; font-weight: 500; line-height: 1.35; margin: 0; color: #1C3327;">Accuracy was strong. Consistency was the hidden risk.</p>
+        <p style="font-size: 19px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">Emoji handling was the largest systematic inconsistency: some transcripts retained emotional cues while others dropped them entirely. In a study measuring perceived overreaction, that missing tone is not cosmetic—it can affect the model's conclusion.</p>
+        <p style="font-size: 19px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">The audit also isolated seven corrupted transcript files caused by upstream transcription errors before they could contaminate downstream analysis.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">120</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Reddit conversations</div></div>
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">896</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Slides audited</div></div>
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">0.93</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Mean accuracy</div></div>
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">7</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Corrupted files flagged</div></div>
+    </div>
+  </div>
+</section>
+
 <!-- PROJECTS -->
 <section id="projects" data-screen-label="Projects" style="background: #F1EADA; padding: 110px 56px;">
   <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
     <div style="display: flex; flex-direction: column; gap: 18px;">
-      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">III · Projects</div>
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">IV · Projects</div>
       <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #1C3327;">Things I've built.</h2>
     </div>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
@@ -197,7 +241,7 @@ a:hover { color: #5C4A1E; }
   <div style="max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px;">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap;">
       <div style="display: flex; flex-direction: column; gap: 18px; max-width: 620px;">
-        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">IV · Writing</div>
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">V · Writing</div>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #F3EDDC;">Let Data Speak.</h2>
         <p style="font-size: 20px; line-height: 1.65; margin: 0; font-style: italic; color: #CFC6A9; text-wrap: pretty;">A publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. {{ issueCount }} issues and counting.</p>
       </div>
@@ -221,7 +265,7 @@ a:hover { color: #5C4A1E; }
 <section data-screen-label="Currently Building" style="background: #F1EADA; padding: 110px 56px;">
   <div style="max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px;">
     <div style="display: flex; flex-direction: column; gap: 18px;">
-      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">V · Currently Building</div>
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">VI · Currently Building</div>
       <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #1C3327;">Work in progress.</h2>
     </div>
     <div style="border: 1px solid #A8956A; background: #F6F1E2; padding: 52px; display: flex; flex-direction: column; gap: 22px;">
@@ -250,7 +294,7 @@ a:hover { color: #5C4A1E; }
 <section data-screen-label="Beyond the Data" style="background: #F1EADA; border-top: 1px solid #C9B88A; padding: 110px 56px;">
   <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px;">
     <div style="display: flex; flex-direction: column; gap: 18px;">
-      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">VI · Beyond the Data</div>
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">VII · Beyond the Data</div>
       <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #1C3327;">The full picture.</h2>
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
@@ -276,7 +320,7 @@ a:hover { color: #5C4A1E; }
   <div style="max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px;">
     <div style="display: flex; align-items: center; gap: 18px;">
       <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
-      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">VII · Contact</div>
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">VIII · Contact</div>
       <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
     </div>
     <h2 style="font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 500; margin: 0; color: #F3EDDC;">Let's talk.</h2>
