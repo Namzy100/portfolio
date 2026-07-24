@@ -2,6 +2,13 @@ name: Update Let Data Speak
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - agent/royal-beige-green-redesign
+    paths:
+      - ".github/workflows/update-writing.yml"
+      - "scripts/update-writing.mjs"
+      - "index.html"
   schedule:
     - cron: "17 3,15 * * *"
 
