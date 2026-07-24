@@ -1,0 +1,44 @@
+name: Sync Let Data Speak
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/sync-let-data-speak.yml"
+      - "scripts/sync-substack.mjs"
+      - "scripts/sync-substack.test.mjs"
+  schedule:
+    - cron: "17 2 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-let-data-speak
+  cancel-in-progress: false
+
+jobs:
+  detect-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test detector
+        run: node --test scripts/sync-substack.test.mjs
+      - name: Detect new Substack issues
+        run: node scripts/sync-substack.mjs
+      - name: Commit generated rows
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No new issues."
+            exit 0
+          fi
+          git config user.name "let-data-speak-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git commit -m "Sync Let Data Speak archive"
+          git push

@@ -1,776 +1,546 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Naman Behl — Data Science & Analytics</title>
-<meta name="description" content="Data Science & Analytics student at UIUC. Building AI-powered analytics tools, publishing Let Data Speak weekly." />
-<meta property="og:title" content="Naman Behl — Data Science & Analytics" />
-<meta property="og:description" content="Data Science & Analytics student at UIUC. NLP intern at Kinesso, founder of Let Data Speak." />
-<meta property="og:type" content="website" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%237c3aed'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='%23080c14'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='26' fill='url(%23g)'>NB</text></svg>" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#07090f;
-  --surface:#0c1220;
-  --card:#111827;
-  --border:#1a2840;
-  --cyan:#00d4ff;
-  --purple:#7c3aed;
-  --text:#dce8f5;
-  --muted:#4a6080;
-  --dim:#7a93b0;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-::selection{background:rgba(0,212,255,.2);color:var(--text)}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#1a2840;border-radius:2px}
-
-/* CANVAS */
-#bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;transition:all .4s ease}
-nav.scrolled{background:rgba(7,9,15,.92);backdrop-filter:blur(24px);border-bottom:1px solid rgba(26,40,64,.7);padding:14px 40px}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
-.nav-links{display:flex;align-items:center;gap:32px}
-.nav-links a{font-family:'Syne',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s}
-.nav-links a:hover{color:var(--text)}
-.nav-links a:hover::after{width:100%}
-.nav-cta{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,212,255,.3);padding:8px 18px;border-radius:100px;text-decoration:none;transition:all .2s;background:rgba(0,212,255,.05)}
-.nav-cta:hover{background:rgba(0,212,255,.12);border-color:rgba(0,212,255,.6)}
-
-/* SECTIONS */
-section{position:relative;z-index:1;padding:120px 40px}
-.container{max-width:1100px;margin:0 auto}
-.container-sm{max-width:820px;margin:0 auto}
-
-/* LABELS */
-.label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:14px}
-.section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.03em;line-height:1.05;color:var(--text);margin-bottom:52px}
-
-/* GRADIENT UTILS */
-.grad{background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.grad-line{height:2px;background:linear-gradient(90deg,#00d4ff,#7c3aed);border-radius:2px}
-.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(26,40,64,.8),transparent);margin:0}
-
-/* CARDS */
-.card{background:rgba(17,24,39,.75);border:1px solid rgba(26,40,64,.7);border-radius:20px;backdrop-filter:blur(12px);transition:border-color .3s,box-shadow .3s,transform .3s}
-.card:hover{border-color:rgba(0,212,255,.28);box-shadow:0 0 40px rgba(0,212,255,.06),0 20px 60px rgba(0,0,0,.3);transform:translateY(-3px)}
-
-/* TAGS */
-.tag{display:inline-flex;align-items:center;padding:4px 11px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;background:rgba(0,212,255,.08);color:rgba(0,212,255,.85);border:1px solid rgba(0,212,255,.18)}
-.tag-gray{display:inline-flex;align-items:center;padding:4px 11px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;background:rgba(26,40,64,.5);color:var(--dim);border:1px solid rgba(26,40,64,.9)}
-
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 36px;border-radius:100px;font-family:'Syne',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .25s;cursor:pointer;border:none}
-.btn-grad{background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;box-shadow:0 0 30px rgba(0,212,255,.25)}
-.btn-grad:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 0 50px rgba(0,212,255,.4)}
-.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(26,40,64,.9)}
-.btn-outline:hover{border-color:rgba(0,212,255,.45);background:rgba(0,212,255,.06);transform:translateY(-2px)}
-
-/* ── HERO ── */
-#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 40px 80px;text-align:center}
-.hero-inner{max-width:860px;margin:0 auto;opacity:0;transform:translateY(28px);animation:fadeUp 1s .15s ease forwards}
-.monogram{width:80px;height:80px;border-radius:50%;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.22);display:flex;align-items:center;justify-content:center;margin:0 auto 48px;box-shadow:0 0 40px rgba(0,212,255,.1);position:relative}
-.monogram::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(0,212,255,.08);animation:pulse-ring 3s ease-in-out infinite}
-.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.8rem,12vw,8.5rem);letter-spacing:-.04em;line-height:.92;color:var(--text);text-shadow:0 0 80px rgba(0,212,255,.2);margin-bottom:32px}
-.hero-title-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:32px}
-.hero-title-row .line{height:1px;width:48px;background:linear-gradient(90deg,transparent,#00d4ff)}
-.hero-title-row .line-r{background:linear-gradient(90deg,#7c3aed,transparent)}
-.hero-title{font-family:'Syne',sans-serif;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
-.hero-bio{font-family:'DM Sans',sans-serif;font-weight:300;font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.85;color:var(--dim);max-width:560px;margin:0 auto 52px}
-.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:72px}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:600px;margin:0 auto}
-.stat-card{background:rgba(17,24,39,.8);border:1px solid rgba(26,40,64,.7);border-radius:16px;padding:20px 12px;text-align:center;transition:border-color .3s,box-shadow .3s}
-.stat-card:hover{border-color:rgba(0,212,255,.25);box-shadow:0 0 24px rgba(0,212,255,.06)}
-.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;margin-bottom:4px}
-.stat-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);line-height:1.3}
-.scroll-hint{margin-top:64px;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2.5s ease-in-out infinite}
-.scroll-hint span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#1e3050}
-.scroll-hint .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(0,212,255,.45),transparent)}
-
-/* ── ABOUT ── */
-#about .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.about-text p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.95;color:var(--dim);margin-bottom:18px}
-.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
-
-/* ── EXPERIENCE ── */
-.timeline{position:relative}
-.timeline-line{position:absolute;left:19px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(0,212,255,.35),rgba(124,58,237,.2),transparent)}
-.exp-item{padding-left:56px;position:relative;margin-bottom:20px}
-.exp-dot{position:absolute;left:11px;top:24px;width:16px;height:16px;border-radius:50%;border:2px solid;background:var(--bg)}
-.exp-header{padding:24px 28px 0;cursor:pointer;user-select:none}
-.exp-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.exp-role{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;color:var(--text);margin-bottom:4px}
-.exp-company{font-family:'Syne',sans-serif;font-size:13px;font-weight:500}
-.exp-toggle{font-size:22px;font-weight:300;color:var(--muted);flex-shrink:0}
-.exp-tags{padding:14px 28px;display:flex;flex-wrap:wrap;gap:8px}
-.exp-body{padding:16px 28px 24px;border-top:1px solid rgba(26,40,64,.6);display:block}
-.exp-body.closed{display:none}
-.exp-bullet{display:flex;gap:14px;margin-bottom:14px}
-.exp-bullet-dot{width:4px;height:4px;border-radius:50%;margin-top:9px;flex-shrink:0}
-.exp-bullet p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.9;color:var(--dim)}
-
-/* ── PROJECTS ── */
-.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.proj-card{padding:28px;display:flex;flex-direction:column;gap:18px}
-.proj-head{display:flex;justify-content:space-between;align-items:flex-start}
-.proj-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--text);margin-bottom:4px}
-.proj-sub{font-family:'JetBrains Mono',monospace;font-size:11px}
-.proj-link{font-size:20px;color:var(--muted);text-decoration:none;transition:color .2s;flex-shrink:0;margin-left:16px}
-.proj-link:hover{color:var(--cyan)}
-.proj-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.9;color:var(--dim)}
-.proj-stats{display:grid;gap:10px}
-.proj-stat{text-align:center;padding:14px 8px;border-radius:12px}
-.proj-stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:2px}
-.proj-stat-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)}
-.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
-
-/* ── WRITING ── */
-.writing-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:24px}
-.writing-head h2{margin-bottom:12px}
-.writing-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);max-width:440px;line-height:1.8}
-.issues-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.issue-card{padding:24px;display:flex;gap:20px;text-decoration:none;cursor:pointer}
-.issue-num-box{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center}
-.issue-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
-.issue-topic{font-family:'Syne',sans-serif;font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px}
-.issue-teaser{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;color:var(--dim)}
-
-/* ── CONTACT ── */
-#contact{text-align:center}
-#contact .section-title{margin-bottom:12px}
-.contact-sub{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);max-width:440px;margin:0 auto 56px;line-height:1.8}
-.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:700px;margin:0 auto 56px}
-.contact-card{padding:20px 16px;text-align:center;border-radius:18px}
-.contact-card-label{font-family:'Syne',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.contact-card-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);text-decoration:none;transition:opacity .2s}
-.contact-card-val:hover{opacity:.7}
-.footer{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px}
-
-/* AVATAR */
-.avatar{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(124,58,237,.15));border:2px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;box-shadow:0 0 60px rgba(0,212,255,.15)}
-.avatar::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,212,255,.1)}
-.avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden}
-
-/* ACTIVE NAV */
-.nav-links a.active{color:var(--text)}
-.nav-links a.active::after{width:100%}
-
-/* TOOLTIP */
-.stat-card{position:relative}
-.stat-card .tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(13,21,36,.95);border:1px solid rgba(0,212,255,.2);border-radius:8px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
-.stat-card:hover .tooltip{opacity:1}
-
-/* CERT CARD */
-.cert-card{display:flex;align-items:center;gap:16px;padding:18px 22px}
-.cert-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.cert-name{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;color:var(--text);margin-bottom:2px}
-.cert-issuer{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
-
-/* CURRENTLY BUILDING */
-.building-card{padding:28px 32px;background:rgba(0,212,255,.04);border-color:rgba(0,212,255,.2)}
-
-/* ANIMATIONS */
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes pulse-ring{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.6;transform:scale(1.08)}}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* MOBILE */
-@media(max-width:768px){
-  nav{padding:16px 20px}
-  nav.scrolled{padding:12px 20px}
-  .nav-links a:not(.nav-cta){display:none}
-  section{padding:80px 20px}
-  #about .grid-2{grid-template-columns:1fr;gap:48px}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .proj-grid{grid-template-columns:1fr}
-  .issues-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:repeat(2,1fr)}
-  .timeline-line{left:15px}
-  .exp-item{padding-left:44px}
-  .exp-dot{left:7px}
-  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important}
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
-
-<canvas id="bg"></canvas>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #F1EADA; }
+a { color: #8A6D2F; text-decoration: none; }
+a:hover { color: #5C4A1E; }
+.hero-portrait {
+  position: relative;
+  overflow: hidden;
+  background: #C8A85E;
+  box-shadow: 0 16px 44px rgba(7, 18, 12, 0.34);
+}
+.hero-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(200,168,94,0.28);
+}
+.hero-portrait img {
+  object-position: 50% 38%;
+}
+.capability-card { transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; }
+.capability-card:hover { transform: translateY(-3px); border-color: #8A6D2F !important; background: #223C2E !important; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (max-width: 860px) {
+  nav { padding: 16px 20px !important; }
+  nav > div { gap: 14px !important; }
+  nav > div > a:not(:last-child) { display: none !important; }
+  header { padding: 76px 20px 84px !important; }
+  header h1 { font-size: clamp(58px, 17vw, 86px) !important; }
+  section { padding-left: 22px !important; padding-right: 22px !important; }
+  section > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 42px !important; }
+  section div[style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr 1fr !important; gap: 32px 18px !important; }
+  section div[style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+  section div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  section a[style*="grid-template-columns: 80px"] {
+    grid-template-columns: 56px 1fr !important;
+    gap: 14px !important;
+  }
+  section a[style*="grid-template-columns: 80px"] > :last-child {
+    grid-column: 2 !important;
+  }
+}
+@media (max-width: 520px) {
+  header h1 { font-size: 54px !important; }
+  header p { font-size: 19px !important; }
+  header div[style*="display: flex; gap: 18px"] { flex-direction: column !important; width: 100%; }
+  header div[style*="display: flex; gap: 18px"] a { text-align: center !important; }
+  section h2 { font-size: 42px !important; }
+  section div[style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
+}
+</style>
+</helmet>
+<div style="font-family: 'Cormorant Garamond', Georgia, serif; color: #22301F; background: #F1EADA;">
 
 <!-- NAV -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">NB</a>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#writing">Writing</a>
-    <a href="#contact">Contact</a>
-    <a href="https://letdataspeak.substack.com" target="_blank" class="nav-cta">Let Data Speak ↗</a>
+<nav data-screen-label="Nav" style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px 56px; background: rgba(241,234,218,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #C9B88A;">
+  <a href="#hero" style="font-family: 'Marcellus', serif; font-size: 22px; letter-spacing: 0.18em; color: #1C3327;">N·B</a>
+  <div style="display: flex; align-items: center; gap: 34px;">
+    <a href="#about" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">About</a>
+    <a href="#experience" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Experience</a>
+    <a href="#research" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Research</a>
+    <a href="#projects" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Projects</a>
+    <a href="#writing" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Writing</a>
+    <a href="#contact" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #3A4A38;" style-hover="color: #8A6D2F;">Contact</a>
+    <a href="https://letdataspeak.substack.com" target="_blank" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #F1EADA; background: #1C3327; padding: 10px 22px; border: 1px solid #8A6D2F;" style-hover="background: #2E4A3A;">Let Data Speak ↗</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-inner">
-    <div style="display:flex;justify-content:center;margin-bottom:40px">
-      <div class="avatar">
-        <div class="avatar-inner" style="width:100%;height:100%;border-radius:50%;overflow:hidden">
-          <img src="avatar.jpg" alt="Naman Behl" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%"/>
-        </div>
-        <div style="position:absolute;bottom:6px;right:6px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7c3aed);display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)">
-          <span style="font-size:9px;font-weight:800;color:#fff;font-family:'Syne',sans-serif">NB</span>
-        </div>
+<header id="hero" data-screen-label="Hero" style="background: #16281F; color: #EFE7D3; padding: 96px 24px 110px; text-align: center; position: relative;">
+  <div style="max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px; animation: fadeUp 0.7s ease both;">
+    <div class="hero-portrait" style="width: 148px; height: 148px; border-radius: 50%; padding: 5px; border: 1px solid #C8A85E; display: flex; align-items: center; justify-content: center;">
+      <img src="data:image/webp;base64,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" alt="Portrait of Naman Behl" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;">
+    </div>
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
+      <div style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.34em; text-transform: uppercase; color: #C8A85E;">AI Engineering · Data Systems · ML Solutions</div>
+      <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
+    </div>
+    <h1 style="font-family: 'Playfair Display', serif; font-weight: 500; font-size: 108px; line-height: 1.02; margin: 0; letter-spacing: 0.01em; color: #F3EDDC;">Naman Behl</h1>
+    <p style="font-size: 23px; line-height: 1.6; font-style: italic; color: #CFC6A9; max-width: 640px; margin: 0; text-wrap: pretty;">In ninth grade, I ran a survey and stayed up all night looking for patterns in the responses. That curiosity became a habit: question the obvious, follow the data, and build something useful from what emerges. Today, at Illinois, I apply it across AI research, data engineering, and products designed for real teams.</p>
+    <div style="display: flex; gap: 18px; margin-top: 10px;">
+      <a href="#experience" style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: #16281F; background: #C8A85E; padding: 15px 34px;" style-hover="background: #D8BC74;">View Experience</a>
+      <a href="#projects" style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: #EFE7D3; border: 1px solid #8A6D2F; padding: 15px 34px;" style-hover="border-color: #C8A85E; color: #C8A85E;">See Projects</a>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section data-screen-label="Stats" style="background: #F1EADA; border-bottom: 1px solid #C9B88A; padding: 64px 56px;">
+  <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px;">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+      <div style="text-align: center; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 500; color: #1C3327; line-height: 1;">{{ s.num }}</div>
+        <div style="width: 36px; height: 1px; background: #8A6D2F; margin: 4px auto;"></div>
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #3A4A38;">{{ s.label }}</div>
+        <div style="font-size: 17px; font-style: italic; color: #6B6A54;">{{ s.detail }}</div>
       </div>
-    </div>
-
-    <h1 class="hero-name">Naman Behl</h1>
-
-    <div class="hero-title-row">
-      <div class="line"></div>
-      <span class="hero-title grad">Data Science & Analytics</span>
-      <div class="line line-r"></div>
-    </div>
-
-    <p class="hero-bio">
-      It started with a survey in 9th grade and a sleepless night spent finding patterns in the responses. That was it — I was gone. Now I'm at Illinois doing this every day, building AI agents that teams actually use, publishing data analyses every week, and planning to do this for a living. The obsession never really stopped.
-    </p>
-
-    <div class="hero-ctas">
-      <a href="#experience" class="btn btn-grad">View Experience</a>
-      <a href="#projects" class="btn btn-outline">See Projects</a>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num grad">3</div><div class="stat-label">Countries Lived In</div><div class="tooltip">India · UAE · USA</div></div>
-      <div class="stat-card"><div class="stat-num grad">84</div><div class="stat-label">Teams Scheduled</div><div class="tooltip">Across 5 tournaments, 384 fixtures</div></div>
-      <div class="stat-card"><div class="stat-num grad">9</div><div class="stat-label">Issues Published</div><div class="tooltip">Let Data Speak — every week since Feb 2026</div></div>
-      <div class="stat-card"><div class="stat-num grad">UAE</div><div class="stat-label">Tennis Rep</div><div class="tooltip">Represented UAE nationally in tennis</div></div>
-    </div>
-
-    <a href="#about" class="scroll-hint" style="text-decoration:none;cursor:pointer">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </a>
+    </sc-for>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="grid-2 reveal">
-      <div class="about-text">
-        <span class="label">About</span>
-        <h2 class="section-title">Built different.<br>Thinks in data.</h2>
-        <div class="grad-line" style="width:48px;margin-bottom:36px"></div>
-        <p>Born in Chandigarh. Grew up in Dubai. Now at the University of Illinois studying Information Sciences and Data Science, with minors in Computer Science and Economics.</p>
-        <p>Last summer I built an NLP-powered analytics agent at Kinesso that marketing teams used daily to query large datasets in plain English and get real-time strategy insights. Before that I was inside a Security Operations Center in Dubai watching enterprise systems operate under real pressure.</p>
-        <p>I also represented the UAE nationally in tennis, captained a cricket team, and published a poetry collection at seventeen. The through-line: I like understanding how things work and finding the pattern underneath.</p>
-        <div class="about-tags">
-          <span class="tag-gray">UIUC '27</span>
-          <span class="tag-gray">CS Minor</span>
-          <span class="tag-gray">Econ Minor</span>
-          <span class="tag-gray">India · UAE · USA</span>
-        </div>
+<section id="about" data-screen-label="About" style="background: #F1EADA; padding: 110px 56px;">
+  <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px;">
+    <div style="display: flex; flex-direction: column; gap: 26px;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">I · About</div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; line-height: 1.1; color: #1C3327;">Built different.<br><em style="font-weight: 400;">Thinks in data.</em></h2>
+      <p style="font-size: 20px; line-height: 1.7; margin: 0; text-wrap: pretty;">Born in Chandigarh. Grew up in Dubai. Now at the University of Illinois studying Information Sciences and Data Science, with minors in Computer Science and Economics.</p>
+      <p style="font-size: 20px; line-height: 1.7; margin: 0; text-wrap: pretty;">Last summer I built an NLP-powered analytics agent at Kinesso that marketing teams used daily to query large datasets in plain English and get real-time strategy insights. Before that I was inside a Security Operations Center in Dubai watching enterprise systems operate under real pressure.</p>
+      <p style="font-size: 20px; line-height: 1.7; margin: 0; text-wrap: pretty;">I also represented the UAE nationally in tennis, captained a cricket team, and published a poetry collection at seventeen. The through-line: I like understanding how things work and finding the pattern underneath.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px;">
+        <sc-for list="{{ badges }}" as="b" hint-placeholder-count="4">
+          <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: #1C3327; border: 1px solid #A8956A; padding: 8px 18px;">{{ b }}</div>
+        </sc-for>
       </div>
-
-      <div>
-        <span class="label">Stack</span>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div class="card" style="padding:20px 24px">
-            <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Languages</p>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">R</span><span class="tag">Java</span><span class="tag">C++</span>
-            </div>
-          </div>
-          <div class="card" style="padding:20px 24px">
-            <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">ML & Analytics</p>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">NLP</span><span class="tag">Statistical Modeling</span>
-            </div>
-          </div>
-          <div class="card" style="padding:20px 24px">
-            <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Visualization & Web</p>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <span class="tag">Matplotlib</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">React</span><span class="tag">Firebase</span>
-            </div>
-          </div>
+    </div>
+    <div style="border: 1px solid #A8956A; padding: 40px; background: #F6F1E2; display: flex; flex-direction: column; gap: 26px; align-self: start;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">The Stack</div>
+      <sc-for list="{{ stack }}" as="grp" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 22px; color: #1C3327;">{{ grp.name }}</div>
+          <div style="font-size: 18px; font-style: italic; color: #4A4A3A; line-height: 1.6;">{{ grp.items }}</div>
+          <div style="width: 100%; height: 1px; background: #D8CCAC;"></div>
         </div>
-      </div>
+      </sc-for>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container-sm">
-    <span class="label reveal">Experience</span>
-    <h2 class="section-title reveal">Where I've worked.</h2>
-
-    <div class="timeline reveal">
-      <div class="timeline-line"></div>
-
-      <!-- Kinesso -->
-      <div class="exp-item">
-        <div class="exp-dot" style="border-color:#00d4ff"></div>
-        <div class="card">
-          <div class="exp-header" onclick="toggleExp(this)">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start">
-              <div>
-                <div class="exp-meta">
-                  <div style="width:6px;height:6px;border-radius:50%;background:#00d4ff;flex-shrink:0"></div>
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">May 2025 – Aug 2025 · Dubai, UAE</span>
-                </div>
-                <div class="exp-role">Data Science Intern</div>
-                <div class="exp-company" style="color:#00d4ff">Kinesso — MENA</div>
-              </div>
-              <span class="exp-toggle">+</span>
-            </div>
-          </div>
-          <div class="exp-tags">
-            <span class="tag">NLP</span><span class="tag">Python</span><span class="tag">AI Agent</span><span class="tag">Data Pipelines</span><span class="tag">Mar-tech</span>
-          </div>
-          <div class="exp-body">
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#00d4ff"></div><p>Engineered and deployed an NLP-powered analytics agent adopted by the marketing analytics and in-house tech teams, enabling any business user to query large-scale datasets and receive real-time answers in plain English without writing SQL.</p></div>
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#00d4ff"></div><p>Built the agent to surface top-performing brand insights and auto-generate data-driven strategy recommendations, replacing hours of manual reporting with on-demand analysis.</p></div>
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#00d4ff"></div><p>Developed scalable data pipelines and optimized analytics workflows, integrating the AI agent directly into the mar-tech stack to accelerate decision-making across business units.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Paramount -->
-      <div class="exp-item">
-        <div class="exp-dot" style="border-color:#7c3aed"></div>
-        <div class="card">
-          <div class="exp-header" onclick="toggleExp(this)">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start">
-              <div>
-                <div class="exp-meta">
-                  <div style="width:6px;height:6px;border-radius:50%;background:#7c3aed;flex-shrink:0"></div>
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">Jul 2022 – Aug 2022 · Dubai, UAE</span>
-                </div>
-                <div class="exp-role">Pre-Sales Intern</div>
-                <div class="exp-company" style="color:#7c3aed">Paramount Computer Systems</div>
-              </div>
-              <span class="exp-toggle">+</span>
-            </div>
-          </div>
-          <div class="exp-tags">
-            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">Cybersecurity</span>
-            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">SOC</span>
-            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">Compliance</span>
-            <span class="tag" style="background:rgba(124,58,237,.1);color:rgba(124,58,237,.9);border-color:rgba(124,58,237,.22)">Enterprise</span>
-          </div>
-          <div class="exp-body">
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Rotated across Security Operations Center (SOC) teams observing real-time threat monitoring, incident response workflows, and enterprise cybersecurity operations across a range of client environments.</p></div>
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Assisted in compliance audits and security assessments to evaluate system vulnerabilities and documentation processes, working directly with senior security engineers.</p></div>
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Contributed to cross-functional discussions on improving mitigation strategy communication and infrastructure resilience, helping translate technical findings for non-technical stakeholders.</p></div>
-            <div class="exp-bullet"><div class="exp-bullet-dot" style="background:#7c3aed"></div><p>Gained firsthand exposure to how enterprise security decisions intersect with business operations — an early lesson in how trust and reliability are products of rigorous process, not just technology.</p></div>
-          </div>
-        </div>
-      </div>
+<section id="experience" data-screen-label="Experience" style="background: #16281F; color: #EFE7D3; padding: 110px 56px;">
+  <div style="max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">II · Experience</div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #F3EDDC;">Where I've worked.</h2>
     </div>
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;">
+        <div>
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #C8A85E; margin-bottom: 10px;">Summer 2026 · Production Engineering</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 500; margin: 0; color: #F3EDDC;">What I can now build end to end.</h3>
+        </div>
+        <p style="max-width: 480px; margin: 0; font-size: 18px; line-height: 1.55; font-style: italic; color: #A9A98C;">Not a tool list—a set of production capabilities earned by shipping, debugging, and operating a real system.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">01 · AI / LLM Engineering</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">Reliable model-backed systems</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Built Claude classifiers with schema-constrained outputs, deterministic fallbacks, cost-aware model routing, and uniform validation that rejects malformed or fabricated data before persistence.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">Claude · JSON Schema · Agent Safety · Adversarial Testing</div>
+        </div>
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">02 · Data Engineering</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">Five sources, one trusted pipeline</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Integrated Adjust, Meta, YouTube, Apify, and Google Sheets into a scheduled pipeline; evolved a Supabase/Postgres schema through real migrations and verified integrity from ingestion to rendered output.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">APIs · Supabase · Postgres · Data Quality</div>
+        </div>
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">03 · Backend & Infrastructure</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">Systems that survive production</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Shipped a FastAPI service with OAuth2, session state, and REST chat; migrated scheduling from local cron to GitHub Actions; managed OAuth scopes, key rotation, and service-account credentials.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">FastAPI · OAuth2 · GitHub Actions · Service Accounts</div>
+        </div>
+        <div class="capability-card" style="border: 1px solid #3D5646; background: #1C3327; padding: 30px; display: flex; flex-direction: column; gap: 13px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #C8A85E;">04 · Delivery & Product</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 25px; color: #F3EDDC;">From incident to interface</div>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: #D9D2B6;">Built five production dashboards and a real-time chat UI, root-caused a silent precedence bug, reconciled divergent Git histories, and documented the system differently for engineers and stakeholders.</p>
+          <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #A9A98C;">Dashboard UI · Debugging · Git · Documentation</div>
+        </div>
+      </div>
+      <div style="border-left: 2px solid #C8A85E; padding: 12px 0 12px 22px; color: #CFC6A9; font-size: 18px; line-height: 1.6;"><strong style="font-family: 'Marcellus', serif; color: #F3EDDC; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px;">Safety boundary:</strong> built a tool-free, read-only conversational agent whose access restrictions are enforced in code—not left to prompt compliance.</div>
+    </div>
+
+    <div style="height: 1px; background: #3D5646; margin: 4px 0 2px;"></div>
+    <sc-for list="{{ jobs }}" as="job" hint-placeholder-count="2">
+      <div style="border: 1px solid #3D5646; background: #1C3327; padding: 44px 48px; display: flex; flex-direction: column; gap: 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 500; margin: 0; color: #F3EDDC;">{{ job.title }}</h3>
+            <div style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: #C8A85E;">{{ job.org }}</div>
+          </div>
+          <div style="font-size: 18px; font-style: italic; color: #A9A98C;">{{ job.when }}</div>
+        </div>
+        <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{ job.points }}" as="pt" hint-placeholder-count="3">
+            <div style="display: flex; gap: 14px; align-items: baseline;">
+              <div style="font-family: 'Marcellus', serif; color: #8A6D2F; font-size: 14px;">✦</div>
+              <p style="font-size: 19px; line-height: 1.65; margin: 0; color: #D9D2B6; text-wrap: pretty;">{{ pt }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px;">
+          <sc-for list="{{ job.tags }}" as="t" hint-placeholder-count="4">
+            <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #C8A85E; border: 1px solid #3D5646; padding: 6px 14px;">{{ t }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- RESEARCH -->
+<section id="research" data-screen-label="Research" style="background: #F1EADA; padding: 110px 56px; border-bottom: 1px solid #C9B88A;">
+  <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 52px;">
+    <div style="display: grid; grid-template-columns: 0.72fr 1.28fr; gap: 76px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">III · Research</div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; line-height: 1.08; color: #1C3327;">When AI judges <em style="font-weight: 400;">human conflict.</em></h2>
+        <div style="width: 72px; height: 1px; background: #8A6D2F;"></div>
+        <p style="font-family: 'Marcellus', serif; font-size: 13px; line-height: 1.7; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6A54; margin: 0;">Professor Meicen Sun · UIUC School of Information Sciences</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 22px;">
+        <p style="font-size: 22px; line-height: 1.65; margin: 0; color: #2F3D2D; text-wrap: pretty;">A broader study of how AI models interpret interpersonal conflict, using 120 real conversations from <em>r/AmIOverreacting</em>. GPT-4o judged whether Person B overreacted under control and modified-framing conditions, and predicted how conversations would continue from their first 60%.</p>
+        <p style="font-size: 20px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">My responsibility was the layer the model depended on: transcript quality. Because the model saw typed transcripts rather than the original screenshots, every missing emoji, altered word, or formatting inconsistency could change the emotional signal—and therefore the judgment.</p>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #A8956A; background: #F6F1E2; padding: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 42px;">
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: #8A6D2F;">The Pipeline</div>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 500; line-height: 1.2; margin: 0; color: #1C3327;">Screenshot-to-transcript quality evaluation</h3>
+        <p style="font-size: 19px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">Built an ML-assisted evaluation pipeline using GPT-4o vision to compare each conversation screenshot with its transcript across two dimensions:</p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 14px; align-items: baseline;"><span style="color: #8A6D2F;">✦</span><p style="font-size: 19px; line-height: 1.6; margin: 0; color: #3F4534;"><strong style="font-family: 'Marcellus', serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px;">Accuracy</strong> — words, punctuation, emojis, and message boundaries.</p></div>
+          <div style="display: flex; gap: 14px; align-items: baseline;"><span style="color: #8A6D2F;">✦</span><p style="font-size: 19px; line-height: 1.6; margin: 0; color: #3F4534;"><strong style="font-family: 'Marcellus', serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px;">Consistency</strong> — whether the same transcription schema was applied across all posts.</p></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 18px; border-left: 1px solid #D8CCAC; padding-left: 42px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: #8A6D2F;">What the audit revealed</div>
+        <p style="font-family: 'Playfair Display', serif; font-size: 29px; font-weight: 500; line-height: 1.35; margin: 0; color: #1C3327;">Accuracy was strong. Consistency was the hidden risk.</p>
+        <p style="font-size: 19px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">Emoji handling was the largest systematic inconsistency: some transcripts retained emotional cues while others dropped them entirely. In a study measuring perceived overreaction, that missing tone is not cosmetic—it can affect the model's conclusion.</p>
+        <p style="font-size: 19px; line-height: 1.7; margin: 0; color: #3F4534; text-wrap: pretty;">The audit also isolated seven corrupted transcript files caused by upstream transcription errors before they could contaminate downstream analysis.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">120</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Reddit conversations</div></div>
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">896</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Slides audited</div></div>
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">0.93</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Mean accuracy</div></div>
+      <div style="border-top: 2px solid #8A6D2F; padding-top: 18px;"><div style="font-family: 'Playfair Display', serif; font-size: 46px; color: #1C3327;">7</div><div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">Corrupted files flagged</div></div>
+    </div>
+  </div>
+</section>
 
 <!-- PROJECTS -->
-<section id="projects">
-  <div class="container">
-    <span class="label reveal">Projects</span>
-    <h2 class="section-title reveal">Things I've built.</h2>
-
-    <div class="proj-grid reveal">
-      <!-- Scheduling AI -->
-      <div class="card proj-card">
-        <div class="proj-head">
-          <div>
-            <div class="proj-title">Scheduling AI</div>
-            <div class="proj-sub" style="color:#00d4ff">Constraint-Based Tournament Engine</div>
+<section id="projects" data-screen-label="Projects" style="background: #F1EADA; padding: 110px 56px;">
+  <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">IV · Projects</div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #1C3327;">Things I've built.</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+        <div style="border: 1px solid #A8956A; background: #F6F1E2; padding: 40px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+            <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #8A6D2F;">{{ p.kind }}</div>
+            <sc-if value="{{ p.href }}" hint-placeholder-val="{{ true }}">
+              <a href="{{ p.href }}" target="_blank" style="font-family: 'Marcellus', serif; font-size: 15px; color: #8A6D2F;">Visit ↗</a>
+            </sc-if>
           </div>
-          <a href="https://github.com/naman-behl/scheduling-ai" target="_blank" class="proj-link">↗</a>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 29px; font-weight: 500; margin: 0; color: #1C3327; line-height: 1.2;">{{ p.name }}</h3>
+          <p style="font-size: 19px; line-height: 1.65; margin: 0; color: #3F4534; text-wrap: pretty;">{{ p.desc }}</p>
+          <sc-if value="{{ p.metrics }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; gap: 32px; border-top: 1px solid #D8CCAC; padding-top: 16px;">
+              <sc-for list="{{ p.metrics }}" as="m" hint-placeholder-count="3">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <div style="font-family: 'Playfair Display', serif; font-size: 28px; color: #1C3327;">{{ m.n }}</div>
+                  <div style="font-family: 'Marcellus', serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6A54;">{{ m.l }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="font-size: 17px; font-style: italic; color: #6B6A54; margin-top: auto;">{{ p.tools }}</div>
         </div>
-        <p class="proj-desc">Built a scheduling engine that generated a complete, conflict-free fixture calendar across 5 tournaments, 84 teams, and 384 league games — resolving 80+ overlapping constraints automatically with zero errors.</p>
-        <div class="proj-stats" style="grid-template-columns:repeat(4,1fr)">
-          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">84</div><div class="proj-stat-label">Teams</div></div>
-          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">384</div><div class="proj-stat-label">Fixtures</div></div>
-          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">80+</div><div class="proj-stat-label">Constraints</div></div>
-          <div class="proj-stat" style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.15)"><div class="proj-stat-num" style="color:#00d4ff">5</div><div class="proj-stat-label">Tournaments</div></div>
-        </div>
-        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">Constraint Satisfaction</span><span class="tag-gray">Optimization</span></div>
-      </div>
-
-      <!-- Let Data Speak -->
-      <div class="card proj-card">
-        <div class="proj-head">
-          <div>
-            <div class="proj-title">Let Data Speak</div>
-            <div class="proj-sub" style="color:#7c3aed">Weekly Quantitative Publication</div>
-          </div>
-          <a href="https://letdataspeak.substack.com" target="_blank" class="proj-link">↗</a>
-        </div>
-        <p class="proj-desc">A weekly data publication where I pick an industry, challenge a commonly held assumption, and run the numbers to see if it holds. 6 issues published, one per week, each covering a different sector.</p>
-        <div class="proj-stats" style="grid-template-columns:repeat(2,1fr)">
-          <div class="proj-stat" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)"><div class="proj-stat-num" style="color:#7c3aed">6+</div><div class="proj-stat-label">Issues</div></div>
-          <div class="proj-stat" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)"><div class="proj-stat-num" style="color:#7c3aed">Weekly</div><div class="proj-stat-label">Cadence</div></div>
-        </div>
-        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">Pandas</span><span class="tag-gray">Matplotlib</span><span class="tag-gray">Analysis</span></div>
-      </div>
-
-      <!-- Statistics Datathon -->
-      <div class="card proj-card">
-        <div class="proj-head">
-          <div>
-            <div class="proj-title">Statistics Datathon</div>
-            <div class="proj-sub" style="color:#00d4ff">UIUC × Synchrony Financial</div>
-          </div>
-        </div>
-        <p class="proj-desc">Open university data competition hosted by UIUC in partnership with Synchrony Financial. Built end-to-end ML pipelines on an unfamiliar dataset under time pressure and presented findings to a panel of judges.</p>
-        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">scikit-learn</span><span class="tag-gray">ML Pipeline</span><span class="tag-gray">Presentation</span></div>
-      </div>
-
-      <!-- Data Dive -->
-      <div class="card proj-card">
-        <div class="proj-head">
-          <div>
-            <div class="proj-title">Data Dive Illinois</div>
-            <div class="proj-sub" style="color:#7c3aed">Illinois Data Science Club Competition</div>
-          </div>
-        </div>
-        <p class="proj-desc">Internal competition through the Illinois Data Science Club competition team. Rapid prototyping of analytical models under tight time constraints, with a focus on clear insight communication.</p>
-        <div class="proj-tags"><span class="tag-gray">Python</span><span class="tag-gray">EDA</span><span class="tag-gray">Team Competition</span><span class="tag-gray">DS Club</span></div>
-      </div>
+      </sc-for>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- WRITING -->
-<section id="writing">
-  <div class="container">
-    <div class="writing-head reveal">
-      <div>
-        <span class="label">Writing</span>
-        <h2 class="section-title" style="margin-bottom:12px">Let Data Speak.</h2>
-        <p class="writing-desc">A weekly publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. 9 issues published, every single week since February 2026.</p>
+<section id="writing" data-screen-label="Writing" style="background: #16281F; color: #EFE7D3; padding: 110px 56px;">
+  <div style="max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 620px;">
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">V · Writing</div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #F3EDDC;">Let Data Speak.</h2>
+        <p style="font-size: 20px; line-height: 1.65; margin: 0; font-style: italic; color: #CFC6A9; text-wrap: pretty;">A publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. <span data-writing-count>{{ issueCount }}</span> issues and counting. The archive syncs directly from Substack.</p>
       </div>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="btn btn-outline">Read on Substack ↗</a>
+      <a href="https://letdataspeak.substack.com" target="_blank" style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: #16281F; background: #C8A85E; padding: 15px 30px; white-space: nowrap;" style-hover="background: #D8BC74;">Read on Substack ↗</a>
     </div>
-
-    <div class="issues-grid reveal">
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#09</span></div>
-        <div><div class="issue-topic">Engineered to Eat</div><div class="issue-teaser">How the obesity epidemic was built — and why the data points at systems, not willpower.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#08</span></div>
-        <div><div class="issue-topic">Why Most People Retire Broke</div><div class="issue-teaser">Despite earning well. The numbers on retirement savings behavior and when people finally start.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#07</span></div>
-        <div><div class="issue-topic">The City That Pays More</div><div class="issue-teaser">Might be leaving you with less. City salary vs cost of living — the real numbers.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#06</span></div>
-        <div><div class="issue-topic">Owning Beats Renting</div><div class="issue-teaser">Until you run the numbers. The rent vs buy debate, actually quantified.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#05</span></div>
-        <div><div class="issue-topic">Diversification & Hidden Exposure</div><div class="issue-teaser">The problem with thinking you're diversified when you're really not.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#04</span></div>
-        <div><div class="issue-topic">The Cost of Cutting Slack</div><div class="issue-teaser">What the data says about what companies actually lose when they cut headcount.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#03</span></div>
-        <div><div class="issue-topic">The Average Player Does Not Exist</div><div class="issue-teaser">Why averages in sports analytics lie — and what you should be looking at instead.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#02</span></div>
-        <div><div class="issue-topic">The Attribution Illusion</div><div class="issue-teaser">How marketing metrics take credit for things they didn't cause.</div></div>
-      </a>
-      <a href="https://letdataspeak.substack.com" target="_blank" class="card issue-card">
-        <div class="issue-num-box"><span class="issue-num grad">#01</span></div>
-        <div><div class="issue-topic">Why Free Trials Fail</div><div class="issue-teaser">More often than teams admit. The data on trial-to-paid conversion and what drives it.</div></div>
-      </a>
+    <div id="writing-archive" style="display: flex; flex-direction: column;">
+      <sc-for list="{{ issues }}" as="iss" hint-placeholder-count="5">
+        <a href="{{ iss.href }}" target="_blank" rel="noopener noreferrer" style="display: grid; grid-template-columns: 80px 1fr 1.4fr; gap: 28px; align-items: baseline; padding: 22px 8px; border-top: 1px solid #3D5646; color: inherit;" style-hover="background: #1C3327;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 22px; color: #C8A85E;">{{ iss.no }}</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 23px; color: #F3EDDC;">{{ iss.title }}</div>
+          <div style="font-size: 18px; font-style: italic; color: #A9A98C; line-height: 1.5;">{{ iss.sub }}</div>
+        </a>
+      </sc-for>
+      <div style="height: 1px; background: #3D5646;"></div>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- CURRENTLY BUILDING -->
-<section id="building" style="padding:120px 40px">
-  <div class="container">
-    <span class="label reveal">Currently Building</span>
-    <h2 class="section-title reveal">Work in progress.</h2>
-    <div class="card building-card reveal">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-        <div style="width:10px;height:10px;border-radius:50%;background:#00d4ff;animation:pulse2 2s ease-in-out infinite"></div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:.1em">ACTIVE PROJECT</span>
+<sc-if value="{{ showCurrentlyBuilding }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Currently Building" style="background: #F1EADA; padding: 110px 56px;">
+  <div style="max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px;">
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">VI · Currently Building</div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #1C3327;">Work in progress.</h2>
+    </div>
+    <div style="border: 1px solid #A8956A; background: #F6F1E2; padding: 52px; display: flex; flex-direction: column; gap: 22px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #8A6D2F;"></div>
+        <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: #8A6D2F;">Active Project · Data Dive Illinois</div>
       </div>
-      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--text);margin-bottom:6px">Restaurant Location Intelligence Tool</h3>
-      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple);margin-bottom:20px">Data Dive Illinois — Illinois Data Science Club</p>
-      <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);line-height:1.9;margin-bottom:24px">A full-stack data pipeline and location intelligence tool that helps entrepreneurs identify the optimal neighborhood to open a restaurant. Given a cuisine type and budget, the system ranks neighborhoods by restaurant success likelihood using four decision dimensions: competition density, neighborhood demographics, foot traffic potential, and budget fit.</p>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px">
-        <div style="padding:14px 18px;border-radius:12px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.12)">
-          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.1em">Data Sources</p>
-          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim)">Yelp (150K+ listings), Census ACS, Foursquare POI, OpenStreetMap, Commercial Real Estate</p>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 500; margin: 0; color: #1C3327;">Restaurant Location Intelligence Tool</h3>
+      <p style="font-size: 20px; line-height: 1.7; margin: 0; color: #3F4534; max-width: 820px; text-wrap: pretty;">A full-stack data pipeline and location intelligence tool that helps entrepreneurs identify the optimal neighborhood to open a restaurant. Given a cuisine type and budget, the system ranks neighborhoods by success likelihood across four dimensions: competition density, demographics, foot traffic potential, and budget fit.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid #D8CCAC; padding-top: 24px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #6B6A54;">Data Sources</div>
+          <div style="font-size: 19px; font-style: italic; color: #3F4534; line-height: 1.6;">Yelp (150K+ listings) · Census ACS · Foursquare POI · OpenStreetMap · Commercial Real Estate</div>
         </div>
-        <div style="padding:14px 18px;border-radius:12px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.12)">
-          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.1em">Output</p>
-          <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim)">Neighborhood success rankings visualized as interactive Folium heatmaps across 3,200+ Illinois census tracts</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #6B6A54;">Output</div>
+          <div style="font-size: 19px; font-style: italic; color: #3F4534; line-height: 1.6;">Neighborhood success rankings as interactive heatmaps across 3,200+ Illinois census tracts</div>
         </div>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px">
-        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Folium</span><span class="tag">Census API</span><span class="tag">Yelp API</span><span class="tag">Foursquare API</span><span class="tag">Feature Engineering</span>
       </div>
     </div>
   </div>
 </section>
+</sc-if>
 
-<div class="divider"></div>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications" style="padding:120px 40px">
-  <div class="container">
-    <span class="label reveal">Certifications</span>
-    <h2 class="section-title reveal">Credentials.</h2>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px" class="reveal">
-
-      <div class="card cert-card">
-        <div class="cert-icon" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18)">🤖</div>
-        <div>
-          <div class="cert-name">Google AI Essentials</div>
-          <div class="cert-issuer">Google</div>
+<!-- BEYOND -->
+<section data-screen-label="Beyond the Data" style="background: #F1EADA; border-top: 1px solid #C9B88A; padding: 110px 56px;">
+  <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px;">
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #8A6D2F;">VII · Beyond the Data</div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #1C3327;">The full picture.</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+      <sc-for list="{{ beyond }}" as="b" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 14px; border-top: 2px solid #8A6D2F; padding-top: 22px;">
+          <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #8A6D2F;">{{ b.tag }}</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 27px; font-weight: 500; margin: 0; color: #1C3327;">{{ b.title }}</h3>
+          <p style="font-size: 19px; line-height: 1.65; margin: 0; color: #3F4534; text-wrap: pretty;">{{ b.desc }}</p>
         </div>
-      </div>
-
-      <div class="card cert-card">
-        <div class="cert-icon" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)">📊</div>
-        <div>
-          <div class="cert-name">IBM Data Science Professional</div>
-          <div class="cert-issuer">IBM</div>
-        </div>
-      </div>
-
-      <div class="card cert-card">
-        <div class="cert-icon" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18)">🎓</div>
-        <div>
-          <div class="cert-name">Game Theory</div>
-          <div class="cert-issuer">Harvard University</div>
-        </div>
-      </div>
-
-      <div class="card cert-card">
-        <div class="cert-icon" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18)">🏆</div>
-        <div>
-          <div class="cert-name">Communication Skills — All 8 Levels, Distinction</div>
-          <div class="cert-issuer">Trinity College London</div>
-        </div>
-      </div>
-
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px 48px; border: 1px solid #A8956A; background: #F6F1E2; padding: 28px 40px; align-items: center;">
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: #8A6D2F;">Credentials</div>
+      <sc-for list="{{ certs }}" as="c" hint-placeholder-count="4">
+        <div style="font-size: 19px; color: #22301F;"><em>{{ c.name }}</em> — <span style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.1em; color: #6B6A54;">{{ c.org }}</span></div>
+      </sc-for>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
-
-<!-- LEADERSHIP -->
-<section id="leadership" style="padding:120px 40px">
-  <div class="container">
-    <span class="label reveal">Beyond the Data</span>
-    <h2 class="section-title reveal">The full picture.</h2>
-
-    <!-- Published Author Banner -->
-    <div class="card reveal" style="padding:32px 36px;margin-bottom:20px;display:flex;align-items:center;gap:32px;background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.25)">
-      <div style="flex-shrink:0;width:64px;height:64px;border-radius:16px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);display:flex;align-items:center;justify-content:center;font-size:28px">📚</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--text)">Self-Published Author</h3>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;border-radius:100px;background:rgba(124,58,237,.12);color:rgba(124,58,237,.9);border:1px solid rgba(124,58,237,.25)">Age 17</span>
-        </div>
-        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:var(--dim);line-height:1.8">Published <em style="color:var(--text)">Me/Who? An Odyssey of Conflicts</em> — a poetry collection exploring teenage identity, emotional conflict, and self-reflection. Writing about data and writing about the human experience turn out to use the same skill: finding the honest thing buried underneath.</p>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px" class="reveal">
-
-      <div class="card" style="padding:28px">
-        <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-          <span style="font-size:20px">🎾</span>
-        </div>
-        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Professional Athlete</h3>
-        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Represented the UAE nationally in tennis. Also captained my college cricket team — two completely different sports, same instinct: read the pattern, make the decision fast.</p>
-      </div>
-
-      <div class="card" style="padding:28px">
-        <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-          <span style="font-size:20px">🏆</span>
-        </div>
-        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px">Trinity College London</h3>
-        <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--dim);line-height:1.85">Completed all 8 levels of the Trinity College London Communication Skills certification with Distinction — which explains why I can talk about NLP pipelines to a room full of non-technical stakeholders without losing them.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <span class="label reveal">Contact</span>
-    <h2 class="section-title reveal">Let's talk.</h2>
-    <p class="contact-sub reveal">Looking for data science internships for Summer 2026. Open to roles at the intersection of analytics, AI, and business impact.</p>
-
-    <div class="contact-grid reveal">
-      <div class="card contact-card">
-        <div class="contact-card-label">Email</div>
-        <a href="mailto:nbehl2@illinois.edu" class="contact-card-val">nbehl2@illinois.edu</a>
-      </div>
-      <div class="card contact-card">
-        <div class="contact-card-label">LinkedIn</div>
-        <a href="https://www.linkedin.com/in/naman-behl-686928265/" target="_blank" class="contact-card-val">Naman Behl</a>
-      </div>
-      <div class="card contact-card">
-        <div class="contact-card-label">Substack</div>
-        <a href="https://letdataspeak.substack.com" target="_blank" class="contact-card-val">Let Data Speak</a>
-      </div>
-      <div class="card contact-card">
-        <div class="contact-card-label">GitHub</div>
-        <a href="https://github.com/naman-behl" target="_blank" class="contact-card-val">naman-behl</a>
-      </div>
+<section id="contact" data-screen-label="Contact" style="background: #16281F; color: #EFE7D3; padding: 120px 56px 80px; text-align: center;">
+  <div style="max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px;">
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">VIII · Contact</div>
+      <div style="width: 64px; height: 1px; background: #8A6D2F;"></div>
     </div>
-
-    <div class="divider" style="max-width:700px;margin:0 auto 24px"></div>
-    <p class="footer">Naman Behl · UIUC '27 · Built with HTML & ambition</p>
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 500; margin: 0; color: #F3EDDC;">Let's talk.</h2>
+    <p style="font-size: 22px; line-height: 1.6; font-style: italic; color: #CFC6A9; margin: 0; text-wrap: pretty;">Open to ambitious work at the intersection of analytics, AI, product, and business impact.</p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 12px;">
+      <a href="mailto:namanbehl1@gmail.com" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #16281F; background: #C8A85E; padding: 14px 28px;" style-hover="background: #D8BC74;">Email</a>
+      <a href="https://www.linkedin.com/in/naman-behl-686928265/" target="_blank" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #EFE7D3; border: 1px solid #8A6D2F; padding: 14px 28px;" style-hover="color: #C8A85E; border-color: #C8A85E;">LinkedIn</a>
+      <a href="https://letdataspeak.substack.com" target="_blank" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #EFE7D3; border: 1px solid #8A6D2F; padding: 14px 28px;" style-hover="color: #C8A85E; border-color: #C8A85E;">Substack</a>
+      <a href="https://github.com/Namzy100" target="_blank" rel="noopener noreferrer" style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #EFE7D3; border: 1px solid #8A6D2F; padding: 14px 28px;" style-hover="color: #C8A85E; border-color: #C8A85E;">GitHub</a>
+    </div>
+    <div style="width: 100%; height: 1px; background: #3D5646; margin-top: 56px;"></div>
+      <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #A9A98C;">Naman Behl · UIUC '28 · Data, products &amp; the questions underneath</div>
   </div>
 </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCurrentlyBuilding&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Sections&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showCurrentlyBuilding: this.props.showCurrentlyBuilding ?? true,
+      issueCount: 12,
+      stats: [
+        { num: "3", label: "Countries Lived In", detail: "India · UAE · USA" },
+        { num: "84", label: "Teams Scheduled", detail: "Across 5 tournaments, 384 fixtures" },
+        { num: "12", label: "Issues Published", detail: "Let Data Speak — synced from Substack" },
+        { num: "UAE", label: "Tennis Rep", detail: "Represented UAE nationally in tennis" },
+      ],
+      badges: ["UIUC '28", "CS Minor", "Econ Minor", "India · UAE · USA"],
+      stack: [
+        { name: "Languages", items: "Python · SQL · R · Java · C++ · JavaScript" },
+        { name: "AI & Machine Learning", items: "Claude · GPT-4o · scikit-learn · NLP · LLM Agents · Structured Outputs · Statistical Modeling" },
+        { name: "Data Engineering", items: "Pandas · NumPy · Postgres · Supabase · REST APIs · Apify · Google Sheets" },
+        { name: "Backend & Infrastructure", items: "FastAPI · OAuth2 · GitHub Actions · Vercel · Firebase" },
+        { name: "Visualization & Frontend", items: "Power BI · Tableau · Matplotlib · React · HTML · CSS" },
+        { name: "Developer Workflow", items: "Git · GitHub · Jupyter · RStudio · Schema Migrations · Testing" },
+      ],
+      jobs: [
+        {
+          title: "Data Science Intern", org: "Kinesso — MENA", when: "May – Aug 2025 · Dubai, UAE",
+          points: [
+            "Engineered and deployed an NLP-powered analytics agent adopted by the marketing analytics and in-house tech teams, enabling any business user to query large-scale datasets in plain English without writing SQL.",
+            "Built the agent to surface top-performing brand insights and auto-generate data-driven strategy recommendations, replacing hours of manual reporting with on-demand analysis.",
+            "Developed scalable data pipelines and optimized analytics workflows, integrating the AI agent directly into the mar-tech stack to accelerate decision-making across business units.",
+          ],
+          tags: ["NLP", "Python", "AI Agent", "Data Pipelines", "Mar-tech"],
+        },
+        {
+          title: "Pre-Sales Intern", org: "Paramount Computer Systems", when: "Jul – Aug 2022 · Dubai, UAE",
+          points: [
+            "Rotated across Security Operations Center teams observing real-time threat monitoring, incident response workflows, and enterprise cybersecurity operations.",
+            "Assisted in compliance audits and security assessments to evaluate system vulnerabilities, working directly with senior security engineers.",
+            "Gained firsthand exposure to how enterprise security decisions intersect with business operations — an early lesson in how trust is a product of rigorous process, not just technology.",
+          ],
+          tags: ["Cybersecurity", "SOC", "Compliance", "Enterprise"],
+        },
+      ],
+      projects: [
+        {
+          kind: "Scheduling AI", name: "Constraint-Based Tournament Engine", href: "https://github.com/naman-behl/scheduling-ai",
+          desc: "A scheduling engine that generated a complete, conflict-free fixture calendar across 5 tournaments — resolving 80+ overlapping constraints automatically with zero errors.",
+          metrics: [{ n: "84", l: "Teams" }, { n: "384", l: "Fixtures" }, { n: "80+", l: "Constraints" }],
+          tools: "Python · Constraint Satisfaction · Optimization",
+        },
+        {
+          kind: "Publication", name: "Let Data Speak", href: "https://letdataspeak.substack.com",
+          desc: "A weekly data publication where I pick an industry, challenge a commonly held assumption, and run the numbers to see if it holds. One issue per week, each covering a different sector.",
+          metrics: [{ n: "12", l: "Issues" }, { n: "Weekly", l: "Cadence" }],
+          tools: "Python · Pandas · Matplotlib · Analysis",
+        },
+        {
+          kind: "Datathon", name: "UIUC × Synchrony Financial", href: null,
+          desc: "Open university data competition hosted by UIUC in partnership with Synchrony Financial. Built end-to-end ML pipelines on an unfamiliar dataset under time pressure and presented findings to a panel of judges.",
+          metrics: null,
+          tools: "Python · scikit-learn · ML Pipeline · Presentation",
+        },
+        {
+          kind: "Competition", name: "Data Dive Illinois", href: null,
+          desc: "Internal competition through the Illinois Data Science Club competition team. Rapid prototyping of analytical models under tight time constraints, with a focus on clear insight communication.",
+          metrics: null,
+          tools: "Python · EDA · Team Competition · DS Club",
+        },
+      ],
+      // LET-DATA-SPEAK:START
+      issues: [
+        { no: "№ 09", title: "Engineered to Eat", sub: "How the obesity epidemic was built — and why the data points at systems, not willpower.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 08", title: "Why Most People Retire Broke", sub: "Despite earning well. The numbers on retirement savings behavior and when people finally start.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 07", title: "The City That Pays More", sub: "Might be leaving you with less. City salary vs cost of living — the real numbers.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 06", title: "Owning Beats Renting", sub: "Until you run the numbers. The rent vs buy debate, actually quantified.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 05", title: "Diversification & Hidden Exposure", sub: "The problem with thinking you're diversified when you're really not.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 04", title: "The Cost of Cutting Slack", sub: "What the data says about what companies actually lose when they cut headcount.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 03", title: "The Average Player Does Not Exist", sub: "Why averages in sports analytics lie — and what you should be looking at instead.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 02", title: "The Attribution Illusion", sub: "How marketing metrics take credit for things they didn't cause.", href: "https://letdataspeak.substack.com" },
+        { no: "№ 01", title: "Why Free Trials Fail", sub: "More often than teams admit. The data on trial-to-paid conversion and what drives it.", href: "https://letdataspeak.substack.com" },
+      ],
+      // LET-DATA-SPEAK:END
+      beyond: [
+        { tag: "Age Seventeen", title: "Self-Published Author", desc: "Published Me/Who? An Odyssey of Conflicts — a poetry collection exploring teenage identity and self-reflection. Writing about data and the human experience use the same skill: finding the honest thing buried underneath." },
+        { tag: "National Level", title: "Athlete", desc: "Represented the UAE nationally in tennis and captained my college cricket team — two different sports, same instinct: read the pattern, make the decision fast." },
+        { tag: "With Distinction", title: "Trinity College London", desc: "Completed all 8 levels of the Communication Skills certification with Distinction — which explains why I can explain NLP pipelines to non-technical stakeholders without losing them." },
+      ],
+      certs: [
+        { name: "Google AI Essentials", org: "Google" },
+        { name: "IBM Data Science Professional", org: "IBM" },
+        { name: "Game Theory", org: "Harvard" },
+        { name: "Communication Skills, All 8 Levels", org: "Trinity College London" },
+      ],
+    };
+  }
+}
+</script>
 
 <script>
-// Canvas background
-(function(){
-  const canvas = document.getElementById('bg');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [], animId;
-  const isMobile = () => window.innerWidth < 768;
+(() => {
+  const escapeText = (value) => String(value ?? "");
+  const row = (issue, number) => {
+    const link = document.createElement("a");
+    link.href = issue.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.style.cssText = "display:grid;grid-template-columns:80px 1fr 1.4fr;gap:28px;align-items:baseline;padding:22px 8px;border-top:1px solid #3D5646;color:inherit";
 
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+    const no = document.createElement("div");
+    no.style.cssText = "font-family:'Playfair Display',serif;font-size:22px;color:#C8A85E";
+    no.textContent = `№ ${String(number).padStart(2, "0")}`;
+
+    const title = document.createElement("div");
+    title.style.cssText = "font-family:'Playfair Display',serif;font-size:23px;color:#F3EDDC";
+    title.textContent = escapeText(issue.title);
+
+    const sub = document.createElement("div");
+    sub.style.cssText = "font-size:18px;font-style:italic;color:#A9A98C;line-height:1.5";
+    sub.textContent = escapeText(issue.sub);
+
+    link.append(no, title, sub);
+    return link;
+  };
+
+  async function refreshWriting() {
+    const archive = document.getElementById("writing-archive");
+    if (!archive) return;
+
+    const response = await fetch("/api/substack", { headers: { accept: "application/json" } });
+    if (!response.ok) throw new Error("Live publication refresh failed.");
+    const data = await response.json();
+    if (!Array.isArray(data.issues) || !data.issues.length) return;
+
+    archive.replaceChildren(
+      ...data.issues.map((issue, index) => row(issue, data.issues.length - index)),
+      Object.assign(document.createElement("div"), { style: "height:1px;background:#3D5646" }),
+    );
+    document.querySelectorAll("[data-writing-count]").forEach((node) => {
+      node.textContent = String(data.issues.length);
+    });
   }
 
-  function initParticles(){
-    particles = [];
-    const count = isMobile() ? 45 : 100;
-    for(let i = 0; i < count; i++){
-      particles.push({
-        x: Math.random()*W, y: Math.random()*H,
-        vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25,
-        r: Math.random()*1.4+.4,
-        op: Math.random()*.45+.08,
-        cyan: Math.random() > .35
-      });
-    }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => refreshWriting().catch(console.error));
+  } else {
+    refreshWriting().catch(console.error);
   }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-
-    // Soft glow blobs
-    const g1 = ctx.createRadialGradient(W*.28,H*.2,0,W*.28,H*.2,W*.55);
-    g1.addColorStop(0,'rgba(0,212,255,.035)');
-    g1.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
-
-    const g2 = ctx.createRadialGradient(W*.78,H*.72,0,W*.78,H*.72,W*.45);
-    g2.addColorStop(0,'rgba(124,58,237,.04)');
-    g2.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
-
-    // Move + draw particles
-    for(let p of particles){
-      p.x += p.vx; p.y += p.vy;
-      if(p.x < 0) p.x = W; if(p.x > W) p.x = 0;
-      if(p.y < 0) p.y = H; if(p.y > H) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle = p.cyan ? `rgba(0,212,255,${p.op})` : `rgba(124,58,237,${p.op*.7})`;
-      ctx.fill();
-    }
-
-    // Connecting lines
-    for(let i = 0; i < particles.length; i++){
-      for(let j = i+1; j < particles.length; j++){
-        const dx = particles[i].x-particles[j].x;
-        const dy = particles[i].y-particles[j].y;
-        const d = Math.sqrt(dx*dx+dy*dy);
-        if(d < 110){
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle = `rgba(0,212,255,${.055*(1-d/110)})`;
-          ctx.lineWidth = .5;
-          ctx.stroke();
-        }
-      }
-    }
-    animId = requestAnimationFrame(draw);
-  }
-
-  const pref = window.matchMedia('(prefers-reduced-motion: reduce)');
-  resize(); initParticles();
-  if(!pref.matches) draw();
-  window.addEventListener('resize', ()=>{ resize(); initParticles(); });
 })();
-
-// Navbar scroll + active nav spy
-const navSections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-window.addEventListener('scroll', ()=>{
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-  let current = '';
-  navSections.forEach(s=>{ if(window.scrollY >= s.offsetTop - 120) current = s.id; });
-  navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+current); });
-});
-
-// Scroll reveal
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-// Experience accordion
-function toggleExp(header){
-  const body = header.closest('.card').querySelector('.exp-body');
-  const toggle = header.querySelector('.exp-toggle');
-  const isClosed = body.classList.contains('closed');
-  body.classList.toggle('closed', !isClosed);
-  toggle.textContent = isClosed ? '−' : '+';
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  // Set all toggles to − since all are open by default
-  document.querySelectorAll('.exp-toggle').forEach(t=>t.textContent='−');
-});
 </script>
+
 </body>
 </html>
