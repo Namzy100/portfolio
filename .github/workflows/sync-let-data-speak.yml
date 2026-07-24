@@ -1,9 +1,16 @@
 name: Sync Let Data Speak
 
 on:
-  schedule:
-    - cron: "17 * * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/sync-let-data-speak.yml"
+      - "scripts/sync-substack.mjs"
+      - "scripts/sync-substack.test.mjs"
+  schedule:
+    - cron: "17 2 * * 1"
 
 permissions:
   contents: write
