@@ -1,5 +1,5 @@
 const PUBLICATION_URL = "https://letdataspeak.substack.com";
-const ARCHIVE_URL = `${PUBLICATION_URL}/api/v1/archive?sort=new&search=&offset=0&limit=100`;
+const ARCHIVE_URL = `${PUBLICATION_URL}/api/v1/archive?sort=new&search=&offset=0&limit=50`;
 const FEED_URL = `${PUBLICATION_URL}/feed`;
 
 function clean(value = "") {
