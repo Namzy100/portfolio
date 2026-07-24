@@ -300,11 +300,11 @@ a:hover { color: #5C4A1E; }
       <div style="display: flex; flex-direction: column; gap: 18px; max-width: 620px;">
         <div style="font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #C8A85E;">V · Writing</div>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 500; margin: 0; color: #F3EDDC;">Let Data Speak.</h2>
-        <p style="font-size: 20px; line-height: 1.65; margin: 0; font-style: italic; color: #CFC6A9; text-wrap: pretty;">A publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. {{ issueCount }} issues and counting. The archive syncs directly from Substack.</p>
+        <p style="font-size: 20px; line-height: 1.65; margin: 0; font-style: italic; color: #CFC6A9; text-wrap: pretty;">A publication where I interrogate industry assumptions with data. No filler — just the numbers and what they actually say. <span data-writing-count>{{ issueCount }}</span> issues and counting. The archive syncs directly from Substack.</p>
       </div>
       <a href="https://letdataspeak.substack.com" target="_blank" style="font-family: 'Marcellus', serif; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: #16281F; background: #C8A85E; padding: 15px 30px; white-space: nowrap;" style-hover="background: #D8BC74;">Read on Substack ↗</a>
     </div>
-    <div style="display: flex; flex-direction: column;">
+    <div id="writing-archive" style="display: flex; flex-direction: column;">
       <sc-for list="{{ issues }}" as="iss" hint-placeholder-count="5">
         <a href="{{ iss.href }}" target="_blank" rel="noopener noreferrer" style="display: grid; grid-template-columns: 80px 1fr 1.4fr; gap: 28px; align-items: baseline; padding: 22px 8px; border-top: 1px solid #3D5646; color: inherit;" style-hover="background: #1C3327;">
           <div style="font-family: 'Playfair Display', serif; font-size: 22px; color: #C8A85E;">{{ iss.no }}</div>
@@ -445,7 +445,7 @@ class Component extends DCLogic {
         {
           kind: "Publication", name: "Let Data Speak", href: "https://letdataspeak.substack.com",
           desc: "A weekly data publication where I pick an industry, challenge a commonly held assumption, and run the numbers to see if it holds. One issue per week, each covering a different sector.",
-          metrics: [{ n: "9", l: "Issues" }, { n: "Weekly", l: "Cadence" }],
+          metrics: [{ n: "12", l: "Issues" }, { n: "Weekly", l: "Cadence" }],
           tools: "Python · Pandas · Matplotlib · Analysis",
         },
         {
@@ -489,5 +489,58 @@ class Component extends DCLogic {
   }
 }
 </script>
+
+<script>
+(() => {
+  const escapeText = (value) => String(value ?? "");
+  const row = (issue, number) => {
+    const link = document.createElement("a");
+    link.href = issue.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.style.cssText = "display:grid;grid-template-columns:80px 1fr 1.4fr;gap:28px;align-items:baseline;padding:22px 8px;border-top:1px solid #3D5646;color:inherit";
+
+    const no = document.createElement("div");
+    no.style.cssText = "font-family:'Playfair Display',serif;font-size:22px;color:#C8A85E";
+    no.textContent = `№ ${String(number).padStart(2, "0")}`;
+
+    const title = document.createElement("div");
+    title.style.cssText = "font-family:'Playfair Display',serif;font-size:23px;color:#F3EDDC";
+    title.textContent = escapeText(issue.title);
+
+    const sub = document.createElement("div");
+    sub.style.cssText = "font-size:18px;font-style:italic;color:#A9A98C;line-height:1.5";
+    sub.textContent = escapeText(issue.sub);
+
+    link.append(no, title, sub);
+    return link;
+  };
+
+  async function refreshWriting() {
+    const archive = document.getElementById("writing-archive");
+    if (!archive) return;
+
+    const response = await fetch("/api/substack", { headers: { accept: "application/json" } });
+    if (!response.ok) throw new Error("Live publication refresh failed.");
+    const data = await response.json();
+    if (!Array.isArray(data.issues) || !data.issues.length) return;
+
+    archive.replaceChildren(
+      ...data.issues.map((issue, index) => row(issue, data.issues.length - index)),
+      Object.assign(document.createElement("div"), { style: "height:1px;background:#3D5646" }),
+    );
+    document.querySelectorAll("[data-writing-count]").forEach((node) => {
+      node.textContent = String(data.issues.length);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => refreshWriting().catch(console.error));
+  } else {
+    refreshWriting().catch(console.error);
+  }
+})();
+</script>
+
 </body>
 </html>
